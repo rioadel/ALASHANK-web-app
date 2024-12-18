@@ -1,4 +1,5 @@
-// import { postData } from "./../core/CRUD.js";
+import { postData } from "./../core/CRUD.js";
+import { LocalStorageHelper } from "./../core/local_storage_helper.js";
 
 const signUpButton = document.getElementById("signUp");
 const signInButton = document.getElementById("signIn");
@@ -78,8 +79,14 @@ signInForm.addEventListener("submit", (e) => {
   if (isValid) {
     postData('teachers/login', { username: signInUserName.value, password: signInPassword.value }).then((data) => {
       if (data.status) {
-        console.log('hello');
-        window.location.href = "Dashboard Design Rana/index.html";
+         // Extract only the necessary data
+         const { token, teacher } = data.data;
+         console.log(token);
+         const { id, name,username,contacts, imageUrl } = teacher;
+         LocalStorageHelper.setItem('token', token);
+         LocalStorageHelper.setItem('teacher', { id, name,username,contacts, imageUrl });
+         console.log(LocalStorageHelper.getAllKeys());
+         window.location.href = "Dashboard Design Rana/index.html";
         
       }
       else {
@@ -89,30 +96,3 @@ signInForm.addEventListener("submit", (e) => {
 
   }
 });
-
-const apiBaseUrl = 'http://51.68.175.80/test/api';
-const apiKey = 'ac67edbe1ce9c1da5a5b3eb0fd682ea2';
-const headers = {
-    'Content-Type': 'application/json',
-    'api-key': apiKey,
-}
-// Creat
-async function postData(endpointUrl, resource) {
-    try {
-        const response = await fetch(`${apiBaseUrl}/${endpointUrl}`, {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify(resource),
-        });
-        const data = await response.json();
-        if (!response.ok) {
-            return { status:false, message: data.message};    
-        }
-        else {
-            return { status:true,data:response.data };
-        }
-    } catch (error) {
-        console.error('Error creating resource:', error);
-        throw error;
-    }
-}

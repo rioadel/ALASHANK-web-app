@@ -16,10 +16,10 @@ export async function postData(endpointUrl, resource) {
         });
         const data = await response.json();
         if (!response.ok) {
-            return { status:false, message: data.message};    
+            return { status: false, message: data.message };
         }
         else {
-            return { status:true,data:response.data };
+            return { status: true, data: data};
         }
     } catch (error) {
         console.error('Error creating resource:', error);
@@ -52,7 +52,7 @@ export async function updateResource(endpointUrl, updatedResource) {
     try {
         const response = await fetch(`${apiBaseUrl}/${endpointUrl}`, {
             method: 'PUT',
-            headers:headers,
+            headers: headers,
             body: JSON.stringify(updatedResource),
         });
         const data = await response.json();
