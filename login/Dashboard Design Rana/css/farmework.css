@@ -9,6 +9,9 @@
 .d-flex {
   display: flex;
 }
+.d-flexd{
+  flex-direction: row;
+}
 .f-wrap{
   flex-wrap: wrap;
 }
