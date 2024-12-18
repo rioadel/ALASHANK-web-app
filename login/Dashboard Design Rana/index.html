@@ -1,62 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="css/farmework.css">
-    <link rel="stylesheet" href="css/master.css">
-    <link rel="stylesheet" href="css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap" rel="stylesheet" />
-</head>
+    <head>
+        <script src="./js/home_script.js" type="module" defer></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="referrer" content="no-referrer" />
+        <title>Dashboard</title>
+        <link rel="stylesheet" href="css/farmework.css">
+        <link rel="stylesheet" href="css/master.css">
+        <link rel="stylesheet" href="css/all.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap"
+            rel="stylesheet" />
+    </head>
 
-<body>
-    <div class="page d-flex">
-        <!-- sidebar -->
-        <div class="sidebar bg-white p-20 p-relative">
-            <img src="imgs/logo.png" alt="logo" width="100" class="logoimg">
-            <!-- <h3 class="p-relative mt-0 txt-center">Alashank</h3> -->
-            <ul>
-                <li>
-                    <a class="active d-flex c-black align-center fs-14 rad-6 p-10" href="index.html">
-                        <i class="fa-regular fa-chart-bar fa-fw"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="groups.html">
-                        <i class="fa-solid fa-diagram-project fa-fw"></i>
-                        <span>Groups</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="lessons.html">
-                        <i class="fa-solid fa-graduation-cap fa-fw"></i>
-                        <span>Lessons</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="studnts.html">
-                        <i class="fa-regular fa-circle-user fa-fw"></i>
-                        <span>Students</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="profile.html">
-                        <i class="fa-regular fa-user fa-fw"></i>
-                        <span>Profile</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="setting.html">
-                        <i class="fa-solid fa-gear fa-fw"></i>
-                        <span>Settings</span>
-                    </a>
-                </li>
-                <!-- <li>
+    <body >
+        <div class="page d-flex">
+            <!-- sidebar -->
+            <div class="sidebar bg-white p-20 p-relative">
+                <img src="imgs/logo.png" alt="logo" width="100" class="logoimg">
+                <!-- <h3 class="p-relative mt-0 txt-center">Alashank</h3> -->
+                <ul>
+                    <li>
+                        <a
+                            class="active d-flex c-black align-center fs-14 rad-6 p-10"
+                            href="index.html">
+                            <i class="fa-regular fa-chart-bar fa-fw"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-flex c-black align-center fs-14 rad-6 p-10"
+                            href="groups.html">
+                            <i class="fa-solid fa-diagram-project fa-fw"></i>
+                            <span>Groups</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-flex c-black align-center fs-14 rad-6 p-10"
+                            href="lessons.html">
+                            <i class="fa-solid fa-graduation-cap fa-fw"></i>
+                            <span>Lessons</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-flex c-black align-center fs-14 rad-6 p-10"
+                            href="studnts.html">
+                            <i class="fa-regular fa-circle-user fa-fw"></i>
+                            <span>Students</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-flex c-black align-center fs-14 rad-6 p-10"
+                            href="profile.html">
+                            <i class="fa-regular fa-user fa-fw"></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-flex c-black align-center fs-14 rad-6 p-10"
+                            href="setting.html">
+                            <i class="fa-solid fa-gear fa-fw"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <!-- <li>
                     <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="index.html">
                         <i class="fa-regular fa-file fa-fw"></i>
                         <span>Files</span>
@@ -68,124 +79,155 @@
                         <span>Plans</span>
                     </a>
                 </li> -->
-            </ul>
-        </div>
-
-        <div class="content w-full">
-            <!-- start Head -->
-            <div class="head bg-white p-15 between-flex">
-                <div class="search p-relative">
-                    <input type="search" placeholder="Type for search.." class="p-10">
-                </div>
-                <div class="icons d-flex align-center">
-                    <span class="notification p-relative">
-                        <i class="fa-regular fa-bell fa-lg"></i>
-                    </span>
-                    <img src="imgs/avatar.png" alt="" class="rad-half">
-                </div>
+                </ul>
             </div>
 
-            <!-- title -->
-            <h1 class="p-relative">Welcomeee</h1>
-            <div class="wrapper d-grid gap-20">
-                <!-- welcome Box -->
-                <div class="welcome bg-white rad-10 txt-c-mobile block-mobile ">
-                    <div class="intro d-flex bg-eee space-between p-20">
-                        <div>
-                            <h2 class="m-0">Welcome</h2>
-                            <p class="c-grey mt-5">Admin</pc>
-                        </div>
-                        <img src="imgs/welcome.png" alt="" class="hide-mobile">
+            <div class="content w-full">
+                <!-- start Head -->
+                <div class="head bg-white p-15 between-flex">
+                    <div class="search p-relative">
+                        <input type="search" placeholder="Type for search.."
+                            class="p-10">
                     </div>
-                    <img src="imgs/avatar.png" alt="" class="avatar">
-                    <div class="body d-flex p-20 txt-center mt-20 mb-20 block-mobile">
-                        <div>Rana Ali<span class="d-block c-grey fs-14 mt-10">Teacher</span></div>
-                        <div>50<span class="d-block c-grey fs-14 mt-10">Lessons</span></div>
-                        <!-- <div>$1500<span class="d-block c-grey fs-14 mt-10">Earned</span></div> -->
-                    </div>
-                    <a href="profile.html" class="visit d-block fs-14 bg-blue c-white w-fit btn-shape">Profile</a>
-                </div>
-
-                <!-- Quick Draft -->
-                <div class="draft p-20 bg-white rad-10 ">
-                    <h2 class="mt-0 mb-10 ">Quick Draft</h2>
-                    <p class="c-grey fs-14 mt-0 mb-20">Write A Draft For Your Ideas</p>
-                    <form>
-                        <input type="text" placeholder="Title" class="d-block bg-eee rad-6 p-10 mb-10 w-full">
-                        <textarea class="d-block bg-eee rad-6 p-10 mb-20 w-full" placeholder="Your Thought"></textarea>
-                        <input type="submit" value="Save" class="save bg-blue c-white btn-shape d-block fs-14 w-fit">
-                    </form>
-                </div>
-
-                <!-- Tickets -->
-                <div class="tickets bg-white rad-10 p-20 ">
-                    <h2 class="mt-0 mb-10">Tickets Statistics</h2>
-                    <p class="c-grey fs-14 mt-0 mb-20">Everything About Support Tickets</p>
-                    <div class="d-flex gap-20 f-wrap txt-center">
-                        <div class="box p-20 rad-6 c-grey fs-14">
-                            <i class="fa-regular fa-rectangle-list fa-2x mb-10 c-orange"></i>
-                            <span class="num d-block mb-10 fw-bold c-black">2500</span>
-                            Total
-                        </div>
-                        <div class="box p-20 c-grey fs-14">
-                            <i class="fa-solid fa-spinner fa-2x mb-10 c-blue"></i>
-                            <span class="num d-block c-black fw-bold fs-25 mb-10">500</span>
-                            Pending
-                        </div>
-                        <div class="box p-20 c-grey fs-14">
-                            <i class="fa-regular fa-circle-check fa-2x mb-10 c-green"></i>
-                            <span class="num d-block c-black fw-bold fs-25 mb-10">1900</span>
-                            Closed
-                        </div>
-                        <div class="box p-20 c-grey fs-14">
-                            <i class="fa-regular fa-rectangle-xmark fa-2x mb-10 c-red"></i>
-                            <span class="num d-block c-black fw-bold fs-25 mb-10">100</span>
-                            Deleted
-                        </div>
+                    <div class="icons d-flex align-center">
+                        <span class="notification p-relative">
+                            <i class="fa-regular fa-bell fa-lg"></i>
+                        </span>
+                        <img src="imgs/avatar.png" alt class="rad-half">
                     </div>
                 </div>
 
-                <!-- News -->
-                <div class="news bg-white rad-10 p-20">
-                    <h2 class="mt-0 mb-20">Latest News</h2>
-                    <div class="news-row between-flex mb-10">
-                        <img src="imgs/news-01.png" alt="">
-                        <div class="info">
-                            <h3 class="fw-bold">Created SASS Section</h3>
-                            <p class="c-grey fs-14 m-0">New SASS Examples & Tutorials</p>
+                <!-- title -->
+                <h1 class="p-relative">Welcomeee</h1>
+                <div class="wrapper d-grid gap-20">
+                    <!-- welcome Box -->
+                    <div
+                        class="welcome bg-white rad-10 txt-c-mobile block-mobile ">
+                        <div class="intro d-flex bg-eee space-between p-20">
+                            <div>
+                                <h2 class="m-0">Welcome</h2>
+                                <p class="c-grey mt-5">Admin</pc>
+                            </div>
+                            <img src="imgs/welcome.png" alt class="hide-mobile">
                         </div>
-                        <span class=" btn-shape bg-eee label">3 Days ago</span>
-                    </div>
-                    <div class="news-row between-flex mb-10">
-                        <img src="imgs/news-02.png" alt="">
-                        <div class="info">
-                            <h3 class="fw-bold">Changed The Design</h3>
-                            <p class="c-grey fs-14 m-0">A Brand New Website Design</p>
+                        <img id='teacherImage' src="./imgs/avatar.png" alt referrerpolicy="no-referrer"
+                            class="avatar">
+                        <div
+                            class="body d-flex p-20 txt-center mt-20 mb-20 block-mobile">
+                            <div id='teacherName'>Rana Ali<span
+                                    class="d-block c-grey fs-14 mt-10">Teacher</span></div>
+                            <div>50<span
+                                    class="d-block c-grey fs-14 mt-10">Lessons</span></div>
+                            <!-- <div>$1500<span class="d-block c-grey fs-14 mt-10">Earned</span></div> -->
                         </div>
-                        <span class=" btn-shape bg-eee label">3 Days ago</span>
+                        <a href="profile.html"
+                            class="visit d-block fs-14 bg-blue c-white w-fit btn-shape">Profile</a>
                     </div>
-                    <div class="news-row between-flex mb-10">
-                        <img src="imgs/news-03.png" alt="">
-                        <div class="info">
-                            <h4 class="fw-bold mt-0 mb-10">Team Increased</h4>
-                            <p class="c-grey fs-14 m-0">3 Developers Joined The Team</p>
+
+                    <!-- Quick Draft -->
+                    <div class="draft p-20 bg-white rad-10 ">
+                        <h2 class="mt-0 mb-10 ">Quick Draft</h2>
+                        <p class="c-grey fs-14 mt-0 mb-20">Write A Draft For
+                            Your Ideas</p>
+                        <form>
+                            <input type="text" placeholder="Title"
+                                class="d-block bg-eee rad-6 p-10 mb-10 w-full">
+                            <textarea
+                                class="d-block bg-eee rad-6 p-10 mb-20 w-full"
+                                placeholder="Your Thought"></textarea>
+                            <input type="submit" value="Save"
+                                class="save bg-blue c-white btn-shape d-block fs-14 w-fit">
+                        </form>
+                    </div>
+
+                    <!-- Tickets -->
+                    <div class="tickets bg-white rad-10 p-20 ">
+                        <h2 class="mt-0 mb-10">Tickets Statistics</h2>
+                        <p class="c-grey fs-14 mt-0 mb-20">Everything About
+                            Support Tickets</p>
+                        <div class="d-flex gap-20 f-wrap txt-center">
+                            <div class="box p-20 rad-6 c-grey fs-14">
+                                <i
+                                    class="fa-regular fa-rectangle-list fa-2x mb-10 c-orange"></i>
+                                <span
+                                    class="num d-block mb-10 fw-bold c-black">2500</span>
+                                Total
+                            </div>
+                            <div class="box p-20 c-grey fs-14">
+                                <i
+                                    class="fa-solid fa-spinner fa-2x mb-10 c-blue"></i>
+                                <span
+                                    class="num d-block c-black fw-bold fs-25 mb-10">500</span>
+                                Pending
+                            </div>
+                            <div class="box p-20 c-grey fs-14">
+                                <i
+                                    class="fa-regular fa-circle-check fa-2x mb-10 c-green"></i>
+                                <span
+                                    class="num d-block c-black fw-bold fs-25 mb-10">1900</span>
+                                Closed
+                            </div>
+                            <div class="box p-20 c-grey fs-14">
+                                <i
+                                    class="fa-regular fa-rectangle-xmark fa-2x mb-10 c-red"></i>
+                                <span
+                                    class="num d-block c-black fw-bold fs-25 mb-10">100</span>
+                                Deleted
+                            </div>
                         </div>
-                        <span class=" btn-shape bg-eee label">3 Days ago</span>
                     </div>
-                    <div class="news-row between-flex mb-10">
-                        <img src="imgs/news-04.png" alt="">
-                        <div class="info">
-                            <h4 class="fw-bold mt-0 mb-10">Added Payment Gateway</h4>
-                            <p class="c-grey fs-14 m-0">Many New Payment Gateways Added</p>
+
+                    <!-- News -->
+                    <div class="news bg-white rad-10 p-20">
+                        <h2 class="mt-0 mb-20">Latest News</h2>
+                        <div class="news-row between-flex mb-10">
+                            <img src="imgs/news-01.png" alt>
+                            <div class="info">
+                                <h3 class="fw-bold">Created SASS Section</h3>
+                                <p class="c-grey fs-14 m-0">New SASS Examples &
+                                    Tutorials</p>
+                            </div>
+                            <span class=" btn-shape bg-eee label">3 Days
+                                ago</span>
                         </div>
-                        <span class=" btn-shape bg-eee label">3 Days ago</span>
+                        <div class="news-row between-flex mb-10">
+                            <img src="imgs/news-02.png" alt>
+                            <div class="info">
+                                <h3 class="fw-bold">Changed The Design</h3>
+                                <p class="c-grey fs-14 m-0">A Brand New Website
+                                    Design</p>
+                            </div>
+                            <span class=" btn-shape bg-eee label">3 Days
+                                ago</span>
+                        </div>
+                        <div class="news-row between-flex mb-10">
+                            <img src="imgs/news-03.png" alt>
+                            <div class="info">
+                                <h4 class="fw-bold mt-0 mb-10">Team
+                                    Increased</h4>
+                                <p class="c-grey fs-14 m-0">3 Developers Joined
+                                    The Team</p>
+                            </div>
+                            <span class=" btn-shape bg-eee label">3 Days
+                                ago</span>
+                        </div>
+                        <div class="news-row between-flex mb-10">
+                            <img src="imgs/news-04.png" alt>
+                            <div class="info">
+                                <h4 class="fw-bold mt-0 mb-10">Added Payment
+                                    Gateway</h4>
+                                <p class="c-grey fs-14 m-0">Many New Payment
+                                    Gateways Added</p>
+                            </div>
+                            <span class=" btn-shape bg-eee label">3 Days
+                                ago</span>
+                        </div>
                     </div>
+
                 </div>
 
             </div>
-
         </div>
-    </div>
-</body>
+    </body>
 
 </html>

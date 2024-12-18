@@ -1,5 +1,5 @@
-import { postData } from "./../core/CRUD.js";
-import { LocalStorageHelper } from "./../core/local_storage_helper.js";
+import { postData } from "../core/helpers/CRUD.js";
+import { LocalStorageHelper } from "../core/helpers/local_storage_helper.js";
 
 const signUpButton = document.getElementById("signUp");
 const signInButton = document.getElementById("signIn");
