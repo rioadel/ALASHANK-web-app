@@ -119,7 +119,7 @@ body{
 .section-svg-icons{
     display: flex;
     flex-direction: row;
-    margin: 0 10px;
+    margin: 0 20px;
 }
 
 .section-svg-icons-forms{
@@ -153,12 +153,21 @@ svg {
 #add-section-icon:hover {
     fill: white;
     background-color: green;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
 }
 #delete-section-icon:hover {
     fill: white;
     background-color: red;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
 }
 #edit-section-icon:hover {
     fill: white;
     background-color: #3c97bf;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
 }
