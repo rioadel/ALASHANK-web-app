@@ -44,7 +44,7 @@ body{
 .tabText h2 {
     margin-top: 10px;
 }
-
+#edit-section-form,
 #delete-section-form,
 .add-section-form {
     position: absolute;
@@ -61,6 +61,7 @@ body{
 
 }
 
+#edit-section-form label,
 #delete-section-form label,
 .add-section-form label {
     display: block;
@@ -68,6 +69,9 @@ body{
     font-weight: bold;
     color: #333;
 }
+#edit-section-form input[type="text"],
+#edit-section-form input[type="color"],
+#edit-section-form input[type="file"],
 #delete-section-form input[type="text"],
 .add-section-form input[type="text"],
 .add-section-form input[type="color"],
@@ -80,6 +84,7 @@ body{
     border-radius: 4px;
 }
 
+#edit-section-form button,
 #delete-section-form button,
 .add-section-form button  
 {
@@ -96,9 +101,16 @@ body{
     color: white;
     margin-right: 10px;
 }
+#edit-section-button-id {
+    background-color: #3c97bf;
+    color: white;
+    margin-right: 10px;
+}
+
+#cancel-edit-section-id,
 #cancel-delete-section-id,
 #cancel-add-section-id {
-    background-color: #3c97bf;
+    background-color: rgba(128, 128, 128, 0.678);
     color: white;
 }
 
