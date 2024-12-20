@@ -1,10 +1,9 @@
 var bigSectionContainer = document.getElementById("big-section-container");
 var addSectionButton = document.getElementById("add-section-id");
 var addSectionForm = document.getElementById("add-section-form-id");
-var addSectionTab = document.getElementById("add-section");
 var addSectionIcon = document.getElementById("add-section-icon");
 var deleteSectionForm = document.getElementById("delete-section-form");
-var deleteSectionTab = document.getElementById("delete-section");
+
 var deleteSectionIcon = document.getElementById("delete-section-icon");
 var deleteSectionButton = document.getElementById("delete-section-button");
 var inputDeleteSectionName = document.getElementById("input-delete-section-name");
@@ -13,15 +12,13 @@ var cancelDeleteSection = document.getElementById("cancel-delete-section-id");
 var editSectionIcon = document.getElementById("edit-section-icon");
 var editSectionForm = document.getElementById("edit-section-form");
 
-var unitsContainer = document.getElementById("units-container");
+// var sectionsContainer = document.getElementById("sections-container");
 
+var currentSection;
 var sections = [];
-var units = [];
 var sectionsCounter = 1;
-var unitsCounter = 1;
-var fileInputCounter = 0;
-var regex = new RegExp(/(add Section)|(delete section)/i);
 
+var regex = new RegExp(/(add Section)|(delete section)/i);
 function createTab(container, tabName, tabID, tabColor, tabImageUrl) {
     if (container && tabName && tabID && tabColor && tabImageUrl) {
         var tab = document.createElement("div");
@@ -41,7 +38,7 @@ function createTab(container, tabName, tabID, tabColor, tabImageUrl) {
         imageDiv.innerHTML = `<img src="${tabImageUrl}" alt="${tabName}">`;
         tab.appendChild(imageDiv);
     
-        container.insertBefore(tab, container.firstChild);
+        container.insertBefore(tab, container.firstChild);        
         return tab;
     }
     else {
@@ -50,15 +47,18 @@ function createTab(container, tabName, tabID, tabColor, tabImageUrl) {
     
 }
 
-function createSection(name, color, imageUrl) {
+function createSection(secName, secColor, secImageUrl) {
     
-    var section = createTab(bigSectionContainer, name, "section-" + sectionsCounter, color, imageUrl);
-    localStorage.setItem("gName" + sectionsCounter, name);
-    localStorage.setItem("gColor" + sectionsCounter, color);
-    localStorage.setItem("gImage" + sectionsCounter, imageUrl);
+    var section = createTab(bigSectionContainer, secName, "section-" + sectionsCounter, secColor, secImageUrl);
+    localStorage.setItem("gName" + sectionsCounter, secName);
+    localStorage.setItem("gColor" + sectionsCounter, secColor);
+    localStorage.setItem("gImage" + sectionsCounter, secImageUrl);
     sections.push(section);
     sectionsCounter++;
-    fileInputCounter++;
+    section.addEventListener('click',function (event) {
+        window.location.href = "./units.html";
+        currentSection = event.target;
+    });
     return section;
 }
 
@@ -80,7 +80,7 @@ addSectionButton.addEventListener("click", function () {
     var inputAddSectionName = document.getElementById("inputSectionName").value;
     var inputAddSectionColor = document.getElementById("inputSectionColor").value;
     var fileInput = document.getElementById("inputSectionfile");
-    var inputAddSectionImageUrl = fileInput.files.length ? URL.createObjectURL(fileInput.files[fileInputCounter]) : "../Resources/prepBoy3.png";
+    var inputAddSectionImageUrl = fileInput.files.length ? URL.createObjectURL(fileInput.files[0]) : "../Resources/prepBoy3.png";
     
     if (regex.test(inputAddSectionName)) {
         console.log("you can't add this tab, please change tab name");
@@ -141,38 +141,37 @@ cancelDeleteSection.addEventListener("click", function () {
 
 function editTab(container, tabName, newName="", newColor="", newImageUrl="") {
     var tab = searchForTabName(container, tabName);
-    var id = tab.id.split("-")[1];
     if (tab) {
         if (newName != "") {
             tab.querySelector("h2").innerHTML = newName;
-                    
-            localStorage.setItem("gName" + id, newName);
+    
         }
         if (newColor !=  "#000000") {
             tab.style.backgroundColor = newColor;
-            localStorage.setItem("gColor"+ id, newColor);
             if (newColor != "black") {
                 tab.style.color = "white";
             }
         }
         if (newImageUrl != "") {
-            fileInputCounter++;
-            newImageUrl = URL.createObjectURL(fileInput.files[fileInputCounter])
-            tab.querySelector("img").src = newImageUrl;
-            localStorage.setItem("gImage"+ id, newImageUrl);  
+            newImageUrl = URL.createObjectURL(fileInput.files[0])
+            tab.querySelector("img").src = newImageUrl;  
         }
+        return tab;
     }
 }
 
-function editSection(sectionName, newName= "", newColor= "", newImageUrl= "") {
-    editTab(sections, sectionName, newName, newColor, newImageUrl);
+function editSection(sectionName, newName = "", newColor = "", newImageUrl = "") {
+    var tab = editTab(sections, sectionName, newName, newColor, newImageUrl);
+    var id = tab.id.split('-')[1]; 
+    localStorage.setItem("gName" + id, newName);
+    localStorage.setItem("gColor"+ id, newColor);
+    localStorage.setItem("gImage"+ id, newImageUrl);
 }
 
 document.addEventListener("click", function (event) {
     const addSectionForm = document.getElementById("add-section-form-id");
     
     if (addSectionForm.style.display === "block") {
-        // Check if the click is outside the form and not on the icon
         if (!addSectionForm.contains(event.target) && event.target !== addSectionIcon) {
             addSectionForm.style.display = "none";
         }
@@ -199,7 +198,7 @@ document.addEventListener("click", function (event) {
     }
 });
 
-editSectionIcon.addEventListener("click", function (event) {
+editSectionIcon.addEventListener("click", function () {
     editSectionForm.focus();
     editSectionForm.style.display = "block";
     addSectionForm.style.display = "none";
@@ -245,8 +244,6 @@ inputEditedSectionColorCheckbox.onchange = function (event) {
     }
 };
 
-
-
 inputEditedSectionImageCheckbox.onchange = function (event) {
     if (event.target.checked && inputEditSectionName.style.borderColor === "green") {
         inputEditedSectionImage.removeAttribute("disabled");
@@ -257,18 +254,20 @@ inputEditedSectionImageCheckbox.onchange = function (event) {
 
 var editSectionButton = document.getElementById("edit-section-button-id");
 editSectionButton.addEventListener('click', function (event) {
+    event.preventDefault();
     editSection(inputEditSectionName.value, inputEditedSectionName.value, inputEditedSectionColor.value, inputEditedSectionImage.value);
 })
 
 var cancelEditSectionButton = document.getElementById("cancel-edit-section-id");
 cancelEditSectionButton.addEventListener("click", function (event) {
+    event.preventDefault();
     editSectionForm.style.display = "none";
 })
 
 window.onload = function () {
     var gName = [], gColor = [], gImage = [];
     if (localStorage.length > 0) {
-        for(x in localStorage){
+        for(let x in localStorage){
             if (x.startsWith("gName")) {
                 gName.push(localStorage[x])
             }
@@ -285,3 +284,51 @@ window.onload = function () {
         createSection(gName[i], gColor[i], gImage[i]);        
     }
 };
+
+
+
+// class GroupInfo{
+//     constructor() {
+//         this.section = currentSection;
+//         this.id = currentSection.id;
+//         this.name = currentSection.querySelector('h2');
+//         this.color = currentSection.style.color;
+//         this.image = currentSection.querySelector('img').src;
+//         this.sections = [];
+//         this.sectionsCounter = 1;
+//     }
+//     createSectionTab(container ,sectionName, sectionColor, unintImageURl) {
+//         var section = createTab(container, sectionName,  "section-" +this.sectionsCounter, sectionColor, unintImageURl);
+//         localStorage.setItem("uName" + sectionsCounter, sectionName);
+//         localStorage.setItem("uColor" + sectionsCounter, sectionColor);
+//         localStorage.setItem("uImage" + sectionsCounter, unintImageURl);
+//         this.sections.push(section);
+//         this.sectionsCounter++;
+//         return section;
+//     }
+//     editSectionTab(sectionName,sectionNewName, sectionNewColor, sectionNewImageUrl) {
+//         editTab(this.sections, sectionName, sectionNewName, sectionNewColor, sectionNewImageUrl);
+//         localStorage.setItem("uName" + id, sectionNewName);
+//         localStorage.setItem("uColor"+ id, sectionNewColor);
+//         localStorage.setItem("uImage"+ id, sectionNewImageUrl);
+//     }
+//     searchForSectionName(sectionName) {
+//         searchForTabName(this.sections, sectionName);
+//     }
+//     deleteSection(sectionName) {    
+//         var section = searchForTabName(this.sections,sectionName);
+        
+//         if (section) {
+//             section.remove();
+//             var tabIndex = section.id.split("-")[1] - 1;
+//             this.sections.splice(tabIndex, 1);
+//             localStorage.removeItem("uName" + tabIndex);
+//             localStorage.removeItem("uColor" + tabIndex);
+//             localStorage.removeItem("uImage" + tabIndex);
+//             console.log(`section "${this.name}" has been deleted.`);
+//         }
+//         else {
+//             console.log(`Section "${this.name}" not found.`);
+//         }
+// }
+// }
