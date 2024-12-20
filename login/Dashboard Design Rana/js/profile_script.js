@@ -2,12 +2,15 @@ import { LocalStorageHelper } from "../../../core/helpers/local_storage_helper.j
 import { postFormData } from "../../../core/helpers/CRUD.js";
 console.log(LocalStorageHelper.getAllKeys());
 initProfilePage();
+console.log(LocalStorageHelper.getItem('teacher'));
 function initProfilePage() {
     // fetching page values 
     let teacherName = document.forms[0].elements[0];
     let teacherUserName = document.forms[0].elements[1];
     let teacherMobile = document.forms[0].elements[2];
     let teacherImage = document.images[0];
+    let teacherImage1 = document.images[1];
+    let teacherImage2 = document.images[2];
     // changing values
     //name
     teacherName.value = LocalStorageHelper.getItem('teacher').name;
@@ -15,6 +18,8 @@ function initProfilePage() {
     var testImg = LocalStorageHelper.getItem('teacher').imageUrl.replace('http://51.68.175.80/', 'http://51.68.175.80/test/');
     console.log(testImg);
     teacherImage.src = testImg;
+    teacherImage1.src = testImg;
+    teacherImage2.src = testImg;
     //username
     teacherUserName.value = LocalStorageHelper.getItem('teacher').username;
     //mobile
