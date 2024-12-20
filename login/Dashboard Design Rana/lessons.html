@@ -11,6 +11,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap" rel="stylesheet" />
+    <script src="../../core/helpers/local_storage_helper.js" type="module"
+    defer></script>
+        <script type="module">
+            import { LocalStorageHelper } from "../../../core/helpers/local_storage_helper.js";
+            initSettingsPage();
+            function initSettingsPage(){
+                console.log(LocalStorageHelper.getAllKeys());
+                let teacherImage = document.images[1];
+                var testImg= LocalStorageHelper.getItem('teacher').imageUrl.replace('http://51.68.175.80/','http://51.68.175.80/test/');
+                teacherImage.src = testImg;
+            }
+        </script>
 </head>
 
 <body>

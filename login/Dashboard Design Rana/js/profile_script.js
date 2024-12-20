@@ -8,7 +8,7 @@ function initProfilePage() {
     let teacherName = document.forms[0].elements[0];
     let teacherUserName = document.forms[0].elements[1];
     let teacherMobile = document.forms[0].elements[2];
-    let teacherImage = document.images[0];
+    
     let teacherImage1 = document.images[1];
     let teacherImage2 = document.images[2];
     // changing values
@@ -17,7 +17,7 @@ function initProfilePage() {
     //img
     var testImg = LocalStorageHelper.getItem('teacher').imageUrl.replace('http://51.68.175.80/', 'http://51.68.175.80/test/');
     console.log(testImg);
-    teacherImage.src = testImg;
+ 
     teacherImage1.src = testImg;
     teacherImage2.src = testImg;
     //username
@@ -53,10 +53,9 @@ function updateProfile() {
     };
     postFormData('teachers/me', formData, 'PATCH').then((data) => {
         if (data.status) {
-            const { token, teacher } = data.data;
-            console.log(token);
+            const {  teacher } = data.data;
             const { id, name, username, contacts, imageUrl } = teacher;
-            LocalStorageHelper.setItem('token', token);
+
             LocalStorageHelper.setItem('teacher', { id, name, username, contacts, imageUrl });
             console.log(LocalStorageHelper.getAllKeys());
             alert('Profile Updated Successfully');
@@ -101,3 +100,5 @@ document.forms[0].addEventListener('submit', (event) => {
     event.preventDefault();
     updateProfile();
 });
+
+

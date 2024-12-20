@@ -31,6 +31,7 @@ export async function postData(endpointUrl, resource) {
 export async function postFormData(endpointUrl, resource, postMethod='POST') {
     try {
         console.log(LocalStorageHelper.getItem('token'));
+        console.log(LocalStorageHelper.getItem('token'));
         const response = await fetch(`${apiBaseUrl}/${endpointUrl}`, {
             
             method: postMethod,
@@ -38,11 +39,11 @@ export async function postFormData(endpointUrl, resource, postMethod='POST') {
                 'api-key': apiKey,
                 'Connection': 'keep-alive',
                 'Authorization': `Bearer ${LocalStorageHelper.getItem('token')}`,
-                'Content-Type': 'multipart/form-data'
             },
             body: resource instanceof FormData ? resource : JSON.stringify(resource),
         });
         const data = await response.json();
+        console.log(data);
         if (!response.ok) {
             return { status: false, message: data.message };
         } else {
