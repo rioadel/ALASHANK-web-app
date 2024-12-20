@@ -87,12 +87,10 @@ signInForm.addEventListener("submit", (e) => {
          LocalStorageHelper.setItem('teacher', { id, name,username,contacts, imageUrl });
          console.log(LocalStorageHelper.getAllKeys());
          window.location.href = "Dashboard Design Rana/index.html";
-        
       }
       else {
         alert(data.message || 'Invalid Email or Password');
       }
     });
-
   }
 });

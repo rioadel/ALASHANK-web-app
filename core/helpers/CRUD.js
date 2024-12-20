@@ -1,4 +1,4 @@
-
+import LocalStorageHelper from "./local_storage_helper.js";
 
 const apiBaseUrl = 'http://51.68.175.80/test/api';
 const apiKey = 'ac67edbe1ce9c1da5a5b3eb0fd682ea2';
@@ -26,6 +26,35 @@ export async function postData(endpointUrl, resource) {
         throw error;
     }
 }
+
+// Post Form 
+export async function postFormData(endpointUrl, resource, postMethod='POST') {
+    try {
+        console.log(LocalStorageHelper.getItem('token'));
+        console.log(LocalStorageHelper.getItem('token'));
+        const response = await fetch(`${apiBaseUrl}/${endpointUrl}`, {
+            
+            method: postMethod,
+            headers: {
+                'api-key': apiKey,
+                'Connection': 'keep-alive',
+                'Authorization': `Bearer ${LocalStorageHelper.getItem('token')}`,
+            },
+            body: resource instanceof FormData ? resource : JSON.stringify(resource),
+        });
+        const data = await response.json();
+        console.log(data);
+        if (!response.ok) {
+            return { status: false, message: data.message };
+        } else {
+            return { status: true, data: data };
+        }
+    } catch (error) {
+        console.error('Error creating resource:', error);
+        throw error;
+    }
+}
+
 
 // Read (GET)
 export async function getResource(endpointUrl) {

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Edit Profile</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="./script.js" type ="module" defer></script>
+    </head>
+    <body>
+        <div class="edit-profile-container">
+            <img src="../../login/Dashboard Design Rana/imgs/avatar.png" alt="Profile Image"
+                class="profile-image" id="previewImage">
+            <input type="file" id="homepageImage" name="image" accept="image/*" required >
+            <form>
+                <input type="text" class="form-input" placeholder="Name"
+                    required>
+
+                <input type="text" class="form-input" placeholder="Username"
+                    required>
+                <input type="tel" class="form-input" placeholder="Mobile Number"
+                    required>
+                <input type="password" class="form-input" placeholder="Password"
+                    >
+                <br><br>
+                <button type="submit" class="save-button">Save</button>
+            </form>
+        </div>
+    </body>
+</html>
