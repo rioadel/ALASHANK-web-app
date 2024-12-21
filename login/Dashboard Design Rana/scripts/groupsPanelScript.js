@@ -324,8 +324,6 @@ async function getCoursesAPI() {
 
 async function addCourse() {
     try {
-
-
         // Create a FormData instance
         const formData = new FormData();
         // Get the file input element

@@ -1,3 +1,6 @@
+import { LocalStorageHelper } from "../../../core/helpers/local_storage_helper.js";
+import { postFormData, getResource, deleteResource, postData } from "../../../core/helpers/CRUD.js";
+
 var bigUnitContainer = document.getElementById("big-unit-container");
 var addUnitButton = document.getElementById("add-unit-id");
 var addUnitForm = document.getElementById("add-unit-form-id");
@@ -14,14 +17,20 @@ var editUnitForm = document.getElementById("edit-unit-form");
 
 // var unitsContainer = document.getElementById("units-container");
 var transferedSectionID = localStorage.getItem("currentTabId");
-var id = transferedSectionID.split("-")[1];
+
 var currentUnit;
 var units = [];
 var unitsCounter = 1;
 
+
+
+
 var regex = new RegExp(/(add Unit)|(delete unit)/i);
-function createTab(container, tabName, tabID, tabColor) {
-    
+function createTabb(container, tabName, tabID, tabColor) {
+    console.log(container, tabName, tabID, tabColor);
+    console.log(tabName);
+    console.log(tabID);
+    console.log(tabColor);
     if (container && tabName && tabID && tabColor) {
         var tab = document.createElement("div");
         tab.classList.add("tabContainer");
@@ -34,7 +43,7 @@ function createTab(container, tabName, tabID, tabColor) {
         textDiv.classList.add("tabText");
         textDiv.innerHTML = `<h2>${tabName}</h2>`;
         tab.appendChild(textDiv);
-        
+
         container.insertBefore(tab, container.firstChild);
         return tab;
     }
@@ -46,13 +55,13 @@ function createTab(container, tabName, tabID, tabColor) {
 
 function createUnit(secName, secColor, secId) {
 
-    var unit = createTab(bigUnitContainer, secName, secId, secColor);
+    var unit = createTabb(bigUnitContainer, secName, secId, secColor);
     units.push(unit);
     unitsCounter++;
     unit.addEventListener('click', function () {
         const tabId = this.id; // Get the ID of the clicked tab
         if (tabId) {
-            window.location.href = "./lessons.html";
+            window.location.href = `./lessons.html?id=${tabId}`;
         } else {
             console.warn("Tab does not have an ID. Skipping storage.");
         }
@@ -68,23 +77,20 @@ function searchForTabName(tabs, tabName) {
             tabfound = tab;
         }
     });
-    return  tabfound;
+    return tabfound;
 }
 
 addUnitButton.addEventListener("click", function () {
-    
+
     addUnitForm.style.display = "none";
-    
+
     var inputAddUnitName = document.getElementById("inputUnitName").value;
     var inputAddUnitColor = document.getElementById("inputUnitColor").value;
-    var fileInput = document.getElementById("inputUnitfile");
-    var inputAddUnitImageUrl = fileInput.files.length ? URL.createObjectURL(fileInput.files[0]) : "../Resources/prepBoy3.png";
-    
     if (regex.test(inputAddUnitName)) {
         console.log("you can't add this tab, please change tab name");
     } else {
         if (inputAddUnitName && inputAddUnitColor) {
-            createUnit(inputAddUnitName, inputAddUnitColor, inputAddUnitImageUrl);
+            addCourse(inputAddUnitName, transferedSectionID);
         } else {
             console.log("Please fill in all required fields.");
         }
@@ -95,56 +101,56 @@ addUnitIcon.addEventListener("click", function () {
     addUnitForm.focus();
     deleteUnitForm.style.display = "none";
     addUnitForm.style.display = "block";
-    editUnitForm.style.display="none";
+    editUnitForm.style.display = "none";
 });
 
 cancelAddUnit.addEventListener("click", function () {
     addUnitForm.style.display = "none";
 })
 
-deleteUnitButton.addEventListener("click", function (event) { 
+deleteUnitButton.addEventListener("click", function (event) {
     event.preventDefault();
     deleteUnitForm.style.display = "none";
     var deletedUnitName = inputDeleteUnitName.value;
     deleteUnit(deletedUnitName);
 });
 
-deleteUnitIcon.addEventListener("click", function () { 
+deleteUnitIcon.addEventListener("click", function () {
     deleteUnitForm.focus();
     addUnitForm.style.display = "none";
     deleteUnitForm.style.display = "block";
     editUnitForm.style.display = "none";
 });
 
-function deleteUnit(unitName) {    
-        var unit = searchForTabName(units,unitName);
-        
-        if (unit) {
-            unit.remove();
-            var tabIndex = unit.id.split("-")[1] - 1;
-            units.splice(tabIndex, 1);
-            localStorage.removeItem(`Sec${id}uName ${tabIndex}`);
-            localStorage.removeItem(`Sec${id}uColor ${tabIndex}`);
-            localStorage.removeItem(`Sec${id}uImage ${tabIndex}`);
-            console.log(`Unit "${unitName}" has been deleted.`);
-        }
-        else {
-            console.log(`Unit "${unitName}" not found.`);
-        }
+function deleteUnit(unitName) {
+    var unit = searchForTabName(units, unitName);
+
+    if (unit) {
+        unit.remove();
+        var tabIndex = unit.id.split("-")[1] - 1;
+        units.splice(tabIndex, 1);
+        localStorage.removeItem(`Sec${id}uName ${tabIndex}`);
+        localStorage.removeItem(`Sec${id}uColor ${tabIndex}`);
+        localStorage.removeItem(`Sec${id}uImage ${tabIndex}`);
+        console.log(`Unit "${unitName}" has been deleted.`);
+    }
+    else {
+        console.log(`Unit "${unitName}" not found.`);
+    }
 }
 
 cancelDeleteUnit.addEventListener("click", function () {
     deleteUnitForm.style.display = "none";
 })
 
-function editTab(container, tabName, newName="", newColor="", newImageUrl="") {
+function editTab(container, tabName, newName = "", newColor = "", newImageUrl = "") {
     var tab = searchForTabName(container, tabName);
     if (tab) {
         if (newName != "") {
             tab.querySelector("h2").innerHTML = newName;
-    
+
         }
-        if (newColor !=  "#000000") {
+        if (newColor != "#000000") {
             tab.style.backgroundColor = newColor;
             if (newColor == "black") {
                 tab.style.color = "white";
@@ -152,7 +158,7 @@ function editTab(container, tabName, newName="", newColor="", newImageUrl="") {
         }
         if (newImageUrl != "") {
             newImageUrl = URL.createObjectURL(fileInput.files[0])
-            tab.querySelector("img").src = newImageUrl;  
+            tab.querySelector("img").src = newImageUrl;
         }
         return tab;
     }
@@ -160,7 +166,7 @@ function editTab(container, tabName, newName="", newColor="", newImageUrl="") {
 
 function editUnit(unitName, newName = "", newColor = "", newImageUrl = "") {
     var tab = editTab(units, unitName, newName, newColor, newImageUrl);
-    var tabID = tab.id.split('-')[1]; 
+    var tabID = tab.id.split('-')[1];
     localStorage.setItem(`Sec${id}uName ${tabID}`, newName);
     localStorage.setItem(`Sec${id}uColor ${tabID}`, newColor);
     localStorage.setItem(`Sec${id}uImage ${tabID}`, newImageUrl);
@@ -168,7 +174,7 @@ function editUnit(unitName, newName = "", newColor = "", newImageUrl = "") {
 
 document.addEventListener("click", function (event) {
     const addUnitForm = document.getElementById("add-unit-form-id");
-    
+
     if (addUnitForm.style.display === "block") {
         if (!addUnitForm.contains(event.target) && event.target !== addUnitIcon) {
             addUnitForm.style.display = "none";
@@ -177,7 +183,7 @@ document.addEventListener("click", function (event) {
 });
 
 document.addEventListener("click", function (event) {
-    
+
     var deleteUnitForm = document.getElementById("delete-unit-form");
     if (deleteUnitForm.style.display === "block") {
         if (!deleteUnitForm.contains(event.target) && event.target !== deleteUnitIcon) {
@@ -187,7 +193,7 @@ document.addEventListener("click", function (event) {
 });
 
 document.addEventListener("click", function (event) {
-    
+
     var editUnitForm = document.getElementById("edit-unit-form");
     if (editUnitForm.style.display === "block") {
         if (!editUnitForm.contains(event.target) && event.target !== editUnitIcon) {
@@ -210,7 +216,6 @@ var inputEditedUnitColor = document.getElementById("input-edited-unit-color-id")
 var inputEditedUnitImage = document.getElementById("input-edited-unit-image-id");
 var inputEditedUnitNameCheckbox = document.getElementById("input-edit-name-id");
 var inputEditedUnitColorCheckbox = document.getElementById("input-edit-color-id");
-var inputEditedUnitImageCheckbox = document.getElementById("input-edit-image-id");
 
 inputEditUnitName.onfocus = function () {
     this.style.border = "1px solid gray";
@@ -220,9 +225,9 @@ inputEditUnitName.onblur = function () {
     var tab = searchForTabName(units, this.value.trim());
 
     if (tab) {
-        this.style.borderColor = "green"; 
+        this.style.borderColor = "green";
     } else {
-        this.style.borderColor = "red"; 
+        this.style.borderColor = "red";
     }
 };
 
@@ -242,13 +247,6 @@ inputEditedUnitColorCheckbox.onchange = function (event) {
     }
 };
 
-inputEditedUnitImageCheckbox.onchange = function (event) {
-    if (event.target.checked && inputEditUnitName.style.borderColor === "green") {
-        inputEditedUnitImage.removeAttribute("disabled");
-    } else {
-        inputEditedUnitImage.setAttribute("disabled", "disabled");
-    }
-};
 
 var editUnitButton = document.getElementById("edit-unit-button-id");
 editUnitButton.addEventListener('click', function (event) {
@@ -261,28 +259,48 @@ cancelEditUnitButton.addEventListener("click", function (event) {
     event.preventDefault();
     editUnitForm.style.display = "none";
 })
+
+
+async function addCourse(courseName, courseId) {
+    try {
+        console.log('Adding course:', courseName, courseId);
+        const response = await postData('sections', { name: courseName, courseId: courseId });
+        if (response?.status) {
+            console.log('response', response);
+            let secId = response.data.section.id ;
+            console.log('yessssssssssssssssssssssssssssssssssssss');
+            console.log(secId);
+            createUnit(courseName, getRandomHexColor(), secId);
+            // Notify user
+            alert('Section is added successfully!');
+        } else {
+            // Handle errors gracefully
+            alert(response?.message || 'Invalid course name or image upload.');
+        }
+    } catch (error) {
+        // Catch and log errors for debugging
+        console.error('Error adding course:', error);
+        alert('An unexpected error occurred. Please try again.');
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 window.onload = function () {
     transferedSectionID = localStorage.getItem("currentTabId");
-    window.location.href+=`#${transferedSectionID}`;
-    var ID = window.location.href.split("#")[1].split("-")[1];
-    var uName = [], uColor = [], uImage = [];
-    if (localStorage.length > 0) {
-        for(let x in localStorage){
-            if (x.startsWith(`Sec${ID}uName`)) {
-                uName.push(localStorage[x])
-            }
-            else if (x.startsWith(`Sec${ID}uColor`)) {
-                uColor.push(localStorage[x]);
-            }
-            // Check for group image
-            else if (x.startsWith(`Sec${ID}uImage`)) {
-                uImage.push(localStorage[x]) ;
-            }
-        }
+    if (window.location.href.includes(transferedSectionID) === false) {
+        window.location.href += `#${transferedSectionID}`;
     }
-    for (let i = 0; i < uName.length; i++) {
-        createUnit(uName[i], uColor[i], uImage[i]);        
-    }
+    getUnitsAPI(transferedSectionID);
 };
 
 
@@ -296,16 +314,21 @@ function getRandomHexColor() {
     return color;
 }
 
-async function getUnitsAPI() {
+async function getUnitsAPI(courseID) {
     try {
-    let unitID = window.location.href.split("#")[1].split("-")[1];
-    const res = await getResource(`courses/${unitID}`);
-    var courses = res.sections;
-    console.log('Fetched sections:', courses);
-    for (const item of courses) {
-        createUnit(item.name, getRandomHexColor, item.id);
-    }
-    return courses; // Return the list of sections
+        const res = getResource(`courses/${courseID}`).then((res) => {
+            console.log(res);
+            var course = res.course;
+            var sections = course.sections;
+
+            console.log('Fetched sections:', sections);
+            for (const item of sections) {
+                console.log(item.id);
+                createUnit(item.name, getRandomHexColor, item.id);
+            }
+        });
+
+
     } catch (error) {
         console.error('Error in getSectionsAPI:', error.meessage);
         return [];

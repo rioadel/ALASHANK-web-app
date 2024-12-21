@@ -5,6 +5,7 @@ const apiKey = 'ac67edbe1ce9c1da5a5b3eb0fd682ea2';
 const headers = {
     'Content-Type': 'application/json',
     'api-key': apiKey,
+    'Authorization': `Bearer ${LocalStorageHelper.getItem('token')}`,
 }
 // Create (POST)
 export async function postData(endpointUrl, resource) {

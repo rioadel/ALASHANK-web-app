@@ -1,40 +1,10 @@
 import { postFormData } from "../../../core/helpers/CRUD.js";
 import { LocalStorageHelper } from "../../../core/helpers/local_storage_helper.js";
-import { getAllSectionIdsByTeacher } from "./lessons.js"; // Assuming this function fetches section IDs
 
 const teacherData = LocalStorageHelper.getItem("teacher");
 const teacherId = teacherData ? teacherData.id : null;
-
-document.addEventListener("DOMContentLoaded", async () => {
-  if (!teacherId) {
-    alert("Teacher ID not found. Please log in.");
-    window.location.href = "/login";
-    return;
-  }
-
-  try {
-    // Fetch the available section IDs
-    const sectionIds = await getAllSectionIdsByTeacher(teacherId);
-    console.log("Available Section IDs:", sectionIds);
-
-    // Populate the section dropdown
-    const sectionSelect = document.querySelector("#section-id");
-    if (sectionIds.length > 0) {
-      sectionIds.forEach((id) => {
-        const option = document.createElement("option");
-        option.value = id;
-        option.textContent = ` ${id}`; // Customize the text as needed
-        sectionSelect.appendChild(option);
-      });
-    } else {
-      sectionSelect.innerHTML =
-        "<option disabled>No sections available</option>";
-    }
-  } catch (error) {
-    console.error("Error fetching section IDs:", error);
-    alert("Failed to load sections. Please try again later.");
-  }
-});
+const params = new URLSearchParams(window.location.search);
+const SECTIONID = params.get("id");
 
 // Toggle visibility between URL and File input fields
 const videoUrlField = document.getElementById("video-url");
@@ -66,22 +36,15 @@ document
     const form = event.target;
 
     const title = form.querySelector("#session-title").value.trim();
-    const sectionId = form.querySelector("#section-id").value.trim();
+
     const videoSource = form.querySelector(
       'input[name="video_source"]:checked'
     ).value;
 
-    if (!title || !sectionId || isNaN(sectionId)) {
-      alert("Please provide a valid section ID and title.");
-      return;
-    }
-
-    // Ensure sectionId is treated as a number
-    const sectionIdNum = parseInt(sectionId, 10);
 
     // Prepare base data structure
     let sessionData = {
-      sectionId: sectionIdNum, // Send sectionId as a number
+      sectionId: SECTIONID, // Send sectionId as a number
       title: title,
       exams: [],
       video: {
@@ -89,11 +52,11 @@ document
         url: videoUrlField.value,
       },
     };
-    console.log("sectionIdNum");
-    console.log(sectionIdNum);
+    console.log("SECTIONID");
+    console.log(SECTIONID);
     const formData = new FormData();
     formData.append("data", JSON.stringify(sessionData));
-    // formData.append("sectionId", sectionIdNum); // Check if 'section_id' is expected by the API
+    // formData.append("sectionId", SECTIONID); // Check if 'section_id' is expected by the API
     // formData.append("title", sessionData.title);
     // formData.append("exams", JSON.stringify(sessionData.exams));
     // formData.append("video", videoFile);
@@ -105,7 +68,7 @@ document
       const response = await postFormData("sessions", formData, "POST"); // Send FormData
       if (response.status) {
         alert("Session with video file added successfully!");
-        window.location.href = "Dashboard Design Rana/lessons.html"; // Redirect to main page
+        window.location.href = `Dashboard Design Rana/lessons.html?id=${SECTIONID}`; // Redirect to main page
       } else {
         alert(`Error: ${response.message}`);
       }
@@ -142,10 +105,10 @@ document
     //     alert("Please upload a video file.");
     //     return;
     //   }
-    //   console.log("sectionIdNum");
-    //   console.log(sectionIdNum);
+    //   console.log("SECTIONID");
+    //   console.log(SECTIONID);
     //   const formData = new FormData();
-    //   formData.append("sectionId", sectionIdNum); // Check if 'section_id' is expected by the API
+    //   formData.append("sectionId", SECTIONID); // Check if 'section_id' is expected by the API
     //   formData.append("title", sessionData.title);
     //   formData.append("exams", JSON.stringify(sessionData.exams));
     //   formData.append("video", videoFile);
