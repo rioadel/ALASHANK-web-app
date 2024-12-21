@@ -23,7 +23,7 @@ var sectionsCounter = 1;
 var imageCounter = 2;
 var images = [];
 
-var regex = new RegExp(/(add Section)|(delete section)|(add Group)|(delete Group)|(edit Section)|(edit Group) )/i);
+var regex = new RegExp(/(add Section)|(delete section)/i);
 function createTab(container, tabName, tabID, tabColor, tabImageUrl) {
     if (container && tabName && tabID && tabColor && tabImageUrl) {
         var tab = document.createElement("div");
@@ -67,9 +67,15 @@ function createSection(secName, secColor, secImageUrl) {
     images.push(document.images[1+sectionsCounter]);
     sections.push(section);
     sectionsCounter++;
-    section.addEventListener('click',function (event) {
-        window.location.href = "./units.html";
-        currentSection = event.target;
+    section.addEventListener('click',function () {
+        const tabId = this.id; // Get the ID of the clicked tab
+        if (tabId) {
+            localStorage.setItem('currentTabId', tabId); // Store the ID in localStorage
+            console.log(`Tab ID "${tabId}" stored in localStorage`);
+            window.location.href = "./units.html";
+        } else {
+            console.warn("Tab does not have an ID. Skipping storage.");
+        }
     });
     return section;
 }
@@ -105,6 +111,11 @@ addSectionButton.addEventListener("click", function () {
         }
     }
 });
+
+document.querySelectorAll(".tabContainer").forEach(function(tab) {
+    
+});
+
 
 addSectionIcon.addEventListener("click", function () {
     addSectionForm.focus();
@@ -308,7 +319,8 @@ async function getSectionsAPI() {
                 console.error('Error in getSectionsAPI:', error);
                 return [];
             }
-        }
+}
+
 async function addCourse() {
     try {
         
@@ -369,7 +381,6 @@ async function addCourse() {
     }
 }
 
-
 function editCourse(id) {
     const formData = new FormData();
     const fileInput = document.getElementById('inputSectionfile');
@@ -408,7 +419,6 @@ function deleteCourse(id) {
         }
     });
 }
-
 
 window.onload = function () {
     getSectionsAPI().then((courses) => {

@@ -13,7 +13,8 @@ var editUnitIcon = document.getElementById("edit-unit-icon");
 var editUnitForm = document.getElementById("edit-unit-form");
 
 // var unitsContainer = document.getElementById("units-container");
-
+var transferedSectionID = localStorage.getItem("currentTabId");
+var id = transferedSectionID.split("-")[1];
 var currentUnit;
 var units = [];
 var unitsCounter = 1;
@@ -48,11 +49,10 @@ function createTab(container, tabName, tabID, tabColor, tabImageUrl) {
 }
 
 function createUnit(secName, secColor, secImageUrl) {
-    
-    var unit = createTab(bigUnitContainer, secName, "unit-" + unitsCounter, secColor, secImageUrl);
-    localStorage.setItem("uName" + unitsCounter, secName);
-    localStorage.setItem("uColor" + unitsCounter, secColor);
-    localStorage.setItem("uImage" + unitsCounter, secImageUrl);
+    var unit = createTab(bigUnitContainer, secName, `sec${id}unit-${unitsCounter}`, secColor, secImageUrl);
+    localStorage.setItem(`Sec${id}uName ${unitsCounter}`, secName);
+    localStorage.setItem(`Sec${id}uColor ${unitsCounter}`, secColor);
+    localStorage.setItem(`Sec${id}uImage ${unitsCounter}`, secImageUrl);
     units.push(unit);
     unitsCounter++;
     unit.addEventListener('click',function (event) {
@@ -125,9 +125,9 @@ function deleteUnit(unitName) {
             unit.remove();
             var tabIndex = unit.id.split("-")[1] - 1;
             units.splice(tabIndex, 1);
-            localStorage.removeItem("uName" + tabIndex);
-            localStorage.removeItem("uColor" + tabIndex);
-            localStorage.removeItem("uImage" + tabIndex);
+            localStorage.removeItem(`Sec${id}uName ${tabIndex}`);
+            localStorage.removeItem(`Sec${id}uColor ${tabIndex}`);
+            localStorage.removeItem(`Sec${id}uImage ${tabIndex}`);
             console.log(`Unit "${unitName}" has been deleted.`);
         }
         else {
@@ -148,7 +148,7 @@ function editTab(container, tabName, newName="", newColor="", newImageUrl="") {
         }
         if (newColor !=  "#000000") {
             tab.style.backgroundColor = newColor;
-            if (newColor != "black") {
+            if (newColor == "black") {
                 tab.style.color = "white";
             }
         }
@@ -162,10 +162,10 @@ function editTab(container, tabName, newName="", newColor="", newImageUrl="") {
 
 function editUnit(unitName, newName = "", newColor = "", newImageUrl = "") {
     var tab = editTab(units, unitName, newName, newColor, newImageUrl);
-    var id = tab.id.split('-')[1]; 
-    localStorage.setItem("uName" + id, newName);
-    localStorage.setItem("uColor"+ id, newColor);
-    localStorage.setItem("uImage"+ id, newImageUrl);
+    var tabID = tab.id.split('-')[1]; 
+    localStorage.setItem(`Sec${id}uName ${tabID}`, newName);
+    localStorage.setItem(`Sec${id}uColor ${tabID}`, newColor);
+    localStorage.setItem(`Sec${id}uImage ${tabID}`, newImageUrl);
 }
 
 document.addEventListener("click", function (event) {
@@ -263,19 +263,21 @@ cancelEditUnitButton.addEventListener("click", function (event) {
     event.preventDefault();
     editUnitForm.style.display = "none";
 })
-
 window.onload = function () {
+    transferedSectionID = localStorage.getItem("currentTabId");
+    window.location.href+=`#${transferedSectionID}`;
+    var ID = window.location.href.split("#")[1].split("-")[1];
     var uName = [], uColor = [], uImage = [];
     if (localStorage.length > 0) {
         for(let x in localStorage){
-            if (x.startsWith("uName")) {
+            if (x.startsWith(`Sec${ID}uName`)) {
                 uName.push(localStorage[x])
             }
-            else if (x.startsWith("uColor")) {
+            else if (x.startsWith(`Sec${ID}uColor`)) {
                 uColor.push(localStorage[x]);
             }
             // Check for group image
-            else if (x.startsWith("uImage")) {
+            else if (x.startsWith(`Sec${ID}uImage`)) {
                 uImage.push(localStorage[x]) ;
             }
         }
@@ -287,48 +289,3 @@ window.onload = function () {
 
 
 
-// class GroupInfo{
-//     constructor() {
-//         this.unit = currentUnit;
-//         this.id = currentUnit.id;
-//         this.name = currentUnit.querySelector('h2');
-//         this.color = currentUnit.style.color;
-//         this.image = currentUnit.querySelector('img').src;
-//         this.units = [];
-//         this.unitsCounter = 1;
-//     }
-//     createUnitTab(container ,unitName, unitColor, unintImageURl) {
-//         var unit = createTab(container, unitName,  "unit-" +this.unitsCounter, unitColor, unintImageURl);
-//         localStorage.setItem("uName" + unitsCounter, unitName);
-//         localStorage.setItem("uColor" + unitsCounter, unitColor);
-//         localStorage.setItem("uImage" + unitsCounter, unintImageURl);
-//         this.units.push(unit);
-//         this.unitsCounter++;
-//         return unit;
-//     }
-//     editUnitTab(unitName,unitNewName, unitNewColor, unitNewImageUrl) {
-//         editTab(this.units, unitName, unitNewName, unitNewColor, unitNewImageUrl);
-//         localStorage.setItem("uName" + id, unitNewName);
-//         localStorage.setItem("uColor"+ id, unitNewColor);
-//         localStorage.setItem("uImage"+ id, unitNewImageUrl);
-//     }
-//     searchForUnitName(unitName) {
-//         searchForTabName(this.units, unitName);
-//     }
-//     deleteUnit(unitName) {    
-//         var unit = searchForTabName(this.units,unitName);
-        
-//         if (unit) {
-//             unit.remove();
-//             var tabIndex = unit.id.split("-")[1] - 1;
-//             this.units.splice(tabIndex, 1);
-//             localStorage.removeItem("uName" + tabIndex);
-//             localStorage.removeItem("uColor" + tabIndex);
-//             localStorage.removeItem("uImage" + tabIndex);
-//             console.log(`unit "${this.name}" has been deleted.`);
-//         }
-//         else {
-//             console.log(`Unit "${this.name}" not found.`);
-//         }
-// }
-// }

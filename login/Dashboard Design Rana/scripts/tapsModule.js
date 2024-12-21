@@ -60,3 +60,50 @@ export function editTab(container, tabName, newName="", newColor="", newImageUrl
         return tab;
     }
 }
+
+
+// class GroupInfo{
+//     constructor() {
+//         this.unit = currentUnit;
+//         this.id = currentUnit.id;
+//         this.name = currentUnit.querySelector('h2');
+//         this.color = currentUnit.style.color;
+//         this.image = currentUnit.querySelector('img').src;
+//         this.units = [];
+//         this.unitsCounter = 1;
+//     }
+//     createUnitTab(container ,unitName, unitColor, unintImageURl) {
+//         var unit = createTab(container, unitName,  "unit-" +this.unitsCounter, unitColor, unintImageURl);
+//         localStorage.setItem("uName" + unitsCounter, unitName);
+//         localStorage.setItem("uColor" + unitsCounter, unitColor);
+//         localStorage.setItem("uImage" + unitsCounter, unintImageURl);
+//         this.units.push(unit);
+//         this.unitsCounter++;
+//         return unit;
+//     }
+//     editUnitTab(unitName,unitNewName, unitNewColor, unitNewImageUrl) {
+//         editTab(this.units, unitName, unitNewName, unitNewColor, unitNewImageUrl);
+//         localStorage.setItem("uName" + id, unitNewName);
+//         localStorage.setItem("uColor"+ id, unitNewColor);
+//         localStorage.setItem("uImage"+ id, unitNewImageUrl);
+//     }
+//     searchForUnitName(unitName) {
+//         searchForTabName(this.units, unitName);
+//     }
+//     deleteUnit(unitName) {    
+//         var unit = searchForTabName(this.units,unitName);
+        
+//         if (unit) {
+//             unit.remove();
+//             var tabIndex = unit.id.split("-")[1] - 1;
+//             this.units.splice(tabIndex, 1);
+//             localStorage.removeItem("uName" + tabIndex);
+//             localStorage.removeItem("uColor" + tabIndex);
+//             localStorage.removeItem("uImage" + tabIndex);
+//             console.log(`unit "${this.name}" has been deleted.`);
+//         }
+//         else {
+//             console.log(`Unit "${this.name}" not found.`);
+//         }
+// }
+// }
