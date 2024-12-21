@@ -31,7 +31,7 @@ export async function postData(endpointUrl, resource) {
 export async function postFormData(endpointUrl, resource, postMethod='POST') {
     try {
         console.log(LocalStorageHelper.getItem('token'));
-        console.log(LocalStorageHelper.getItem('token'));
+        console.log(resource);
         const response = await fetch(`${apiBaseUrl}/${endpointUrl}`, {
             
             method: postMethod,

@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 // Toggle visibility between URL and File input fields
-const videoUrlField = document.querySelector(".video-url-field");
+const videoUrlField = document.getElementById("video-url");
 const videoFileField = document.querySelector(".video-file-field");
 const token = LocalStorageHelper.getItem("token");
 
@@ -62,6 +62,7 @@ document
   .getElementById("add-session-form")
   .addEventListener("submit", async (event) => {
     event.preventDefault();
+    console.log("add-session-form");
     const form = event.target;
 
     const title = form.querySelector("#session-title").value.trim();
@@ -85,58 +86,85 @@ document
       exams: [],
       video: {
         name: title,
-        url: "",
+        url: videoUrlField.value,
       },
     };
-
-    if (videoSource === "url") {
-      // Handle YouTube URL case
-      const videoUrl = form.querySelector("#video-url").value.trim();
-      if (!videoUrl) {
-        alert("Please enter a valid YouTube URL.");
-        return;
+    console.log("sectionIdNum");
+    console.log(sectionIdNum);
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(sessionData));
+    // formData.append("sectionId", sectionIdNum); // Check if 'section_id' is expected by the API
+    // formData.append("title", sessionData.title);
+    // formData.append("exams", JSON.stringify(sessionData.exams));
+    // formData.append("video", videoFile);
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    };
+    try {
+      console.log("Sending FormData:", Array.from(formData.entries())); // Log form data
+      const response = await postFormData("sessions", formData, "POST"); // Send FormData
+      if (response.status) {
+        alert("Session with video file added successfully!");
+        window.location.href = "../lessons.html"; // Redirect to main page
+      } else {
+        alert(`Error: ${response.message}`);
       }
-      sessionData.video.url = videoUrl;
-
-      try {
-        console.log("Sending JSON data:", sessionData); // Log to see the full request
-        const response = await postFormData("sessions", sessionData, "POST"); // Send as stringified JSON
-        if (response.status) {
-          alert("Session with YouTube URL added successfully!");
-          window.location.href = "./index.html"; // Redirect to main page
-        } else {
-          alert(`Error: ${response.message}`);
-        }
-      } catch (error) {
-        console.error("Error adding session:", error);
-        alert("An error occurred while adding the session.");
-      }
-    } else if (videoSource === "file") {
-      // Handle file upload case
-      const videoFile = form.querySelector("#video-file").files[0];
-      if (!videoFile) {
-        alert("Please upload a video file.");
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append("sectionId", sectionIdNum); // Check if 'section_id' is expected by the API
-      formData.append("title", sessionData.title);
-      formData.append("exams", JSON.stringify(sessionData.exams));
-      formData.append("video", videoFile);
-
-      try {
-        console.log("Sending FormData:", Array.from(formData.entries())); // Log form data
-        const response = await postFormData("sessions", formData, "POST"); // Send FormData
-        if (response.status) {
-          alert("Session with video file added successfully!");
-          window.location.href = "./index.html"; // Redirect to main page
-        } else {
-          alert(`Error: ${response.message}`);
-        }
-      } catch (error) {
-        console.error("Error adding session:", error);
-        alert("An error occurred while adding the session.");
-      }
+    } catch (error) {
+      console.error("Error adding session:", error);
+      alert("An error occurred while adding the session.");
     }
+    // if (videoSource === "url") {
+    //   // Handle YouTube URL case
+    //   const videoUrl = form.querySelector("#video-url").value.trim();
+    //   if (!videoUrl) {
+    //     alert("Please enter a valid YouTube URL.");
+    //     return;
+    //   }
+    //   sessionData.video.url = videoUrl;
+
+    //   try {
+    //     console.log("Sending JSON data:", sessionData); // Log to see the full request
+    //     const response = await postFormData("sessions", sessionData, "POST"); // Send as stringified JSON
+    //     if (response.status) {
+    //       alert("Session with YouTube URL added successfully!");
+    //       window.location.href = "./index.html"; // Redirect to main page
+    //     } else {
+    //       alert(`Error: ${response.message}`);
+    //     }
+    //   } catch (error) {
+    //     console.error("Error adding session:", error);
+    //     alert("An error occurred while adding the session.");
+    //   }
+    // } else if (videoSource === "file") {
+    //   // Handle file upload case
+    //   const videoFile = form.querySelector("#video-file").files[0];
+    //   if (!videoFile) {
+    //     alert("Please upload a video file.");
+    //     return;
+    //   }
+    //   console.log("sectionIdNum");
+    //   console.log(sectionIdNum);
+    //   const formData = new FormData();
+    //   formData.append("sectionId", sectionIdNum); // Check if 'section_id' is expected by the API
+    //   formData.append("title", sessionData.title);
+    //   formData.append("exams", JSON.stringify(sessionData.exams));
+    //   formData.append("video", videoFile);
+    //   for (const [key, value] of formData.entries()) {
+    //     console.log(`${key}: ${value}`);
+    //   };
+    //   try {
+    //     console.log("Sending FormData:", Array.from(formData.entries())); // Log form data
+    //     const response = await postFormData("sessions", formData, "POST"); // Send FormData
+    //     if (response.status) {
+    //       alert("Session with video file added successfully!");
+    //       window.location.href = "./index.html"; // Redirect to main page
+    //     } else {
+    //       alert(`Error: ${response.message}`);
+    //     }
+    //   } catch (error) {
+    //     console.error("Error adding session:", error);
+    //     alert("An error occurred while adding the session.");
+    //   }
+    // }
+
   });
