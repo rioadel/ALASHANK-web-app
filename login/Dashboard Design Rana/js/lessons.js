@@ -209,9 +209,8 @@ function displaySessions(sessions) {
     // Determine the content based on type (video or YouTube)
     let videoContent = "Not Available";
     if (session.type === "video" && session.video) {
-      videoContent = `<a href="${session.video.url}" target="_blank">${
-        session.video.name || "View Video"
-      }</a>`;
+      videoContent = `<a href="${session.video.url}" target="_blank">${session.video.name || "View Video"
+        }</a>`;
     } else if (session.type === "youtube" && session.fileUrl) {
       videoContent = `<a href="${session.fileUrl}" target="_blank">YouTube Link</a>`;
     }
@@ -326,16 +325,18 @@ async function saveSession(sessionId) {
   const videoUrl = document.getElementById("session-video-url").value;
 
   const formData = new FormData();
-  formData.append("title", title);
-  formData.append("type", type);
-  formData.append("sectionId", sectionId);
-
-  if (videoFile) {
-    formData.append("video", videoFile);
-  } else if (videoUrl) {
-    formData.append("videoUrl", videoUrl);
-  }
-
+  // Prepare base data structure
+  let sessionData = {
+    title: title,
+    exams: [],
+    video: {
+      name: title,
+      url: videoUrl,
+    },
+  };
+  console.log("sesseionNum");
+  console.log(sessionId);
+  formData.append("data", JSON.stringify(sessionData));
   try {
     // Sending the updated session data
     const response = await postFormData(
@@ -352,7 +353,7 @@ async function saveSession(sessionId) {
       sessionRow.querySelector(".session-title").textContent = title;
       sessionRow.querySelector(".session-type").textContent = type;
       sessionRow.querySelector(".session-sectionId").textContent = sectionId;
-
+      console.log("session updated 200")
       // Update the video display
       if (videoFile || videoUrl) {
         const videoElement = sessionRow.querySelector(".session-video");
