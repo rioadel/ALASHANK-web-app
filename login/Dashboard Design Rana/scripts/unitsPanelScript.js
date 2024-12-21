@@ -20,8 +20,9 @@ var units = [];
 var unitsCounter = 1;
 
 var regex = new RegExp(/(add Unit)|(delete unit)/i);
-function createTab(container, tabName, tabID, tabColor, tabImageUrl) {
-    if (container && tabName && tabID && tabColor && tabImageUrl) {
+function createTab(container, tabName, tabID, tabColor) {
+    
+    if (container && tabName && tabID && tabColor) {
         var tab = document.createElement("div");
         tab.classList.add("tabContainer");
         tab.id = tabID;
@@ -33,31 +34,28 @@ function createTab(container, tabName, tabID, tabColor, tabImageUrl) {
         textDiv.classList.add("tabText");
         textDiv.innerHTML = `<h2>${tabName}</h2>`;
         tab.appendChild(textDiv);
-    
-        var imageDiv = document.createElement("div");
-        imageDiv.classList.add("tabImage");
-        imageDiv.innerHTML = `<img src="${tabImageUrl}" alt="${tabName}">`;
-        tab.appendChild(imageDiv);
-    
-        container.insertBefore(tab, container.firstChild);        
+        
+        container.insertBefore(tab, container.firstChild);
         return tab;
     }
     else {
         console.log("Can't create tab");
     }
-    
+
 }
 
-function createUnit(secName, secColor, secImageUrl) {
-    var unit = createTab(bigUnitContainer, secName, `sec${id}unit-${unitsCounter}`, secColor, secImageUrl);
-    localStorage.setItem(`Sec${id}uName ${unitsCounter}`, secName);
-    localStorage.setItem(`Sec${id}uColor ${unitsCounter}`, secColor);
-    localStorage.setItem(`Sec${id}uImage ${unitsCounter}`, secImageUrl);
+function createUnit(secName, secColor, secId) {
+
+    var unit = createTab(bigUnitContainer, secName, secId, secColor);
     units.push(unit);
     unitsCounter++;
-    unit.addEventListener('click',function (event) {
-        window.location.href = "./lessons.html";
-        currentUnit = event.target;
+    unit.addEventListener('click', function () {
+        const tabId = this.id; // Get the ID of the clicked tab
+        if (tabId) {
+            window.location.href = "./lessons.html";
+        } else {
+            console.warn("Tab does not have an ID. Skipping storage.");
+        }
     });
     return unit;
 }
@@ -288,4 +286,29 @@ window.onload = function () {
 };
 
 
+
+function getRandomHexColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+async function getUnitsAPI() {
+    try {
+    let unitID = window.location.href.split("#")[1].split("-")[1];
+    const res = await getResource(`courses/${unitID}`);
+    var courses = res.sections;
+    console.log('Fetched sections:', courses);
+    for (const item of courses) {
+        createUnit(item.name, getRandomHexColor, item.id);
+    }
+    return courses; // Return the list of sections
+    } catch (error) {
+        console.error('Error in getSectionsAPI:', error.meessage);
+        return [];
+    }
+}
 

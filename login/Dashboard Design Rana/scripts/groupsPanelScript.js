@@ -66,9 +66,6 @@ function createTab(container, tabName, tabID, tabColor, tabImageUrl) {
 function createSection(secName, secColor, secImageUrl, secId) {
 
     var section = createTab(bigSectionContainer, secName, secId, secColor, secImageUrl);
-    // localStorage.setItem("gName" + sectionsCounter, secName);
-    // localStorage.setItem("gColor" + sectionsCounter, secColor);
-    // localStorage.setItem("gImage" + sectionsCounter, secImageUrl);
     sections.push(section);
     sectionsCounter++;
     section.addEventListener('click', function () {
