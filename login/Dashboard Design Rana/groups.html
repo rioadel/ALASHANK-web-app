@@ -14,17 +14,17 @@
             href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap"
             rel="stylesheet" />
         <link rel="stylesheet" href="./css/groupsPanel.css">
-        <script src="../../core/helpers/local_storage_helper.js" type="module"
-            defer></script>
+        <script src="../../core/helpers/local_storage_helper.js" type="module" defer></script>
         <script type="module">
-    import { LocalStorageHelper } from "../../../core/helpers/local_storage_helper.js";
-    initSettingsPage();
-    function initSettingsPage(){
-        console.log(LocalStorageHelper.getAllKeys());
-        let teacherImage = document.images[1];
-        var testImg= LocalStorageHelper.getItem('teacher').imageUrl.replace('http://51.68.175.80/','http://51.68.175.80/test/');
-        teacherImage.src = testImg;
-    }
+        import { LocalStorageHelper } from "../../../core/helpers/local_storage_helper.js";
+        initSettingsPage();
+        function initSettingsPage(){
+            console.log(LocalStorageHelper.getAllKeys());
+            let teacherImage = document.images[1];
+            var testImg= LocalStorageHelper.getItem('teacher').imageUrl.replace('http://51.68.175.80/','http://51.68.175.80/test/');
+            teacherImage.src = testImg;
+        }
+    
 </script>
     </head>
 
@@ -200,5 +200,7 @@
                 </div>
             </div>
         </body>
-        <script src="./scripts/groupsPanelScript.js"></script>
+        <script type="module" src="../../core/helpers/local_storage_helper.js"></script>
+        <script src="../../core/helpers/CRUD.js" type="module"></script>
+        <script src="./scripts/groupsPanelScript.js" type="module"></script>
     </html>

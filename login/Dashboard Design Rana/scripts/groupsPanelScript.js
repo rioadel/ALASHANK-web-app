@@ -1,3 +1,6 @@
+import { LocalStorageHelper } from "../../../core/helpers/local_storage_helper.js";
+import { postFormData, getResource,deleteResource } from "../../../core/helpers/CRUD.js";
+
 var bigSectionContainer = document.getElementById("big-section-container");
 var addSectionButton = document.getElementById("add-section-id");
 var addSectionForm = document.getElementById("add-section-form-id");
@@ -95,6 +98,7 @@ addSectionButton.addEventListener("click", function () {
         console.log("you can't add this tab, please change tab name");
     } else {
         if (inputAddSectionName && inputAddSectionColor) {
+            addCourse();
             createSection(inputAddSectionName, inputAddSectionColor, inputAddSectionImageUrl);
         } else {
             console.log("Please fill in all required fields.");
@@ -133,6 +137,7 @@ function deleteSection(sectionName) {
         if (section) {
             section.remove();
             localStorage.removeItem(sectionName);
+            deleteCourse(section.id.split('-')[1]);
             // var tabIndex = section.id.split("-")[1] - 1;
             // sections.splice(tabIndex, 1);
             // localStorage.removeItem("gName" + tabIndex);
@@ -172,13 +177,14 @@ function editTab(container, tabName, newName="", newColor="", newImageUrl="") {
 
 function editSection(sectionName, newName = "", newColor = "", newImageUrl = "") {
     var tab = editTab(sections, sectionName, newName, newColor, newImageUrl);
-    var id = tab.id.split('-')[1]; 
+    var id = tab.id.split('-')[1];
     localStorage.setItem(secName, JSON.stringify({
         id: tab.id,
         name: newName,
         color: newColor,
         image: newImageUrl
     }))
+    editCourse(id);
     // localStorage.setItem("gName" + id, newName);
     // localStorage.setItem("gColor"+ id, newColor);
     // localStorage.setItem("gImage"+ id, newImageUrl);
@@ -280,27 +286,132 @@ cancelEditSectionButton.addEventListener("click", function (event) {
     editSectionForm.style.display = "none";
 })
 
-window.onload = function () {
-
-    for (const item in localStorage) {
-    console.log(item);
+function getRandomHexColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
 }
-    // var gName = [], gColor = [], gImage = [];
-    // if (localStorage.length > 0) {
-    //     for(let x in localStorage){
-    //         if (x.startsWith("gName")) {
-    //             gName.push(localStorage[x])
-    //         }
-    //         else if (x.startsWith("gColor")) {
-    //             gColor.push(localStorage[x]);
-    //         }
-    //         // Check for group image
-    //         else if (x.startsWith("gImage")) {
-    //             gImage.push(localStorage[x]) ;
-    //         }
-    //     }
-    // }
-    // for (let i = 0; i < gName.length; i++) {
-    //     createSection(gName[i], gColor[i], gImage[i]);        
-    // }
+
+async function getSectionsAPI() {
+            try {
+                const res = await getResource('courses/');
+                var courses = res.courses;
+                console.log('Fetched sections:', courses);
+                for (const item of courses) {
+                    createSection(item.name, getRandomHexColor, item.logoUrl);
+                }
+                return courses; // Return the list of sections
+            } catch (error) {
+                console.error('Error in getSectionsAPI:', error);
+                return [];
+            }
+        }
+async function addCourse() {
+    try {
+        
+
+        // Create a FormData instance
+        const formData = new FormData();
+
+        // Get the file input element
+        const fileInput = document.getElementById('inputSectionfile');
+        if (!fileInput || !fileInput.files[0]) {
+            alert('Please upload a file.');
+            return;
+        }
+
+        // Prepare the `data` object
+        const courseName = document.forms[0]?.elements[0]?.value;
+        if (!courseName) {
+            alert('Course name is required.');
+            return;
+        }
+
+        const data = {
+            "name": courseName,
+            "levelId": 1
+        };
+
+        // Append the file and JSON data to FormData
+        formData.append('logoUrl', fileInput.files[0]);
+        formData.append('data', JSON.stringify(data));
+
+        // Debugging: Log FormData contents
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+
+        // Post the FormData
+        const response = await postFormData('courses/', formData, 'POST');
+        if (response?.status) {
+            // Extract course details
+            const { course } = response.data;
+            const { id, name, imageUrl } = course;
+
+            // Save the course details to local storage
+            LocalStorageHelper.setItem('course', { id, name, imageUrl });
+            console.log('Local Storage Keys:', LocalStorageHelper.getAllKeys());
+
+            // Notify user
+            alert('Course added successfully!');
+        } else {
+            // Handle errors gracefully
+            alert(response?.message || 'Invalid course name or image upload.');
+        }
+
+    } catch (error) {
+        // Catch and log errors for debugging
+        console.error('Error adding course:', error);
+        alert('An unexpected error occurred. Please try again.');
+    }
+}
+
+
+function editCourse(id) {
+    const formData = new FormData();
+    const fileInput = document.getElementById('inputSectionfile');
+    console.log(fileInput.files[0]);
+    const data = {
+        "name": document.forms[2].elements[0].value,
+        "levelId": 1,
+    }
+    formData.append('logoUrl', fileInput.files[0]);
+    formData.append('data', JSON.stringify(data));
+    for (const [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+    };
+    postFormData(`courses/${id}`, formData, 'PATCH').then((data) => {
+        if (data.status) {
+            const {  course } = data.data;
+            const { id, name, imageUrl } = course;
+
+            LocalStorageHelper.setItem('course', { id, name, imageUrl });
+            console.log(LocalStorageHelper.getAllKeys());
+            alert('Coures Added Successfully');
+        }
+        else {
+            alert(data.message || 'Invalid Name or Image');
+        }
+    });
+};
+
+function deleteCourse(id) {
+    deleteResource(`courses/${id}`).then((data) => {
+        if (data.status) {
+            alert('Course deleted successfully');
+        }
+        else {
+            alert(data.message || "invalid course");
+        }
+    });
+}
+
+
+window.onload = function () {
+    getSectionsAPI().then((courses) => {
+        console.log('Courses:', courses);
+    })
 };
