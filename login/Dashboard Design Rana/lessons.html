@@ -42,7 +42,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin: 20px;
+        margin: 0 100px ;
       }
 
       #sessions-table {
@@ -74,6 +74,37 @@
       #sessions-table tr:hover {
         background-color: #f9f9f9;
       }
+      /* Add base styles for all icons */
+.custom-icon {
+  font-size: 20px; /* Adjust size */
+  color: #555; /* Default color */
+  cursor: pointer; /* Change cursor to indicate clickable */
+  margin: 0 5px; /* Add spacing between icons */
+  transition: color 0.3s, transform 0.3s; /* Smooth hover effect */
+}
+
+/* Specific styles for edit icon */
+.edit-session {
+  color: #4caf50; /* Green for edit */
+}
+
+/* Specific styles for delete icon */
+.delete-session {
+  color: #f44336; /* Red for delete */
+}
+
+/* Hover effect for all icons */
+.custom-icon:hover {
+  color: #000; /* Change color on hover */
+  transform: scale(1.2); /* Slight zoom effect */
+}
+
+/* Optional: Add more interactivity */
+.custom-icon:active {
+  transform: scale(1); /* Reset scale on click */
+  opacity: 0.8; /* Slight transparency on click */
+}
+
 
       .modal-overlay {
         position: fixed;
@@ -122,6 +153,28 @@
         background-color: #f44336;
         color: white;
       }
+      #add-session-btn {
+  background-color: #3f9fd3; /* اللون الأساسي */
+  color: #fff; /* لون النص */
+  border: none; /* إزالة الحدود */
+  border-radius: 5px; /* زوايا مستديرة */
+  padding: 10px 20px; /* مساحة داخلية */
+  font-size: 16px; /* حجم الخط */
+  cursor: pointer; /* تغيير المؤشر عند التمرير */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* إضافة ظل */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* تأثير الانتقال */
+}
+
+#add-session-btn:hover {
+  background-color: #3f9fd3; /* لون مختلف عند التمرير */
+  transform: scale(1.05); /* تكبير خفيف عند التمرير */
+}
+
+#add-session-btn:active {
+  background-color: #3f9fd3; /* لون عند الضغط */
+  transform: scale(0.95); /* تصغير خفيف عند الضغط */
+}
+
     </style>
   </head>
 
@@ -212,9 +265,10 @@
             <img src="imgs/avatar.png" alt="" class="rad-half" />
           </div>
         </div>
-        <div style="text-align: center; margin: 20px 0;">
-            <button id="add-session-btn" class="btn btn-primary">Add Session</button>
-          </div>
+        <div style="margin: 20px ; text-align: center;">
+          <button id="add-session-btn" class="btn btn-primary">Add Session</button>
+        </div>
+        
           
         <div class="container">
             <div id="modal-container"></div>

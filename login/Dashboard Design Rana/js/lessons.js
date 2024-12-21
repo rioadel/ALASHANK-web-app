@@ -209,8 +209,9 @@ function displaySessions(sessions) {
     // Determine the content based on type (video or YouTube)
     let videoContent = "Not Available";
     if (session.type === "video" && session.video) {
-      videoContent = `<a href="${session.video.url}" target="_blank">${session.video.name || "View Video"
-        }</a>`;
+      videoContent = `<a href="${session.video.url}" target="_blank">${
+        session.video.name || "View Video"
+      }</a>`;
     } else if (session.type === "youtube" && session.fileUrl) {
       videoContent = `<a href="${session.fileUrl}" target="_blank">YouTube Link</a>`;
     }
@@ -226,8 +227,9 @@ function displaySessions(sessions) {
           <td class="session-sectionId">${session.sectionId || "Unknown"}</td>
           <td class="session-video">${videoContent}</td>
           <td>
-            <i class="edit-session fas fa-edit" title="Edit"></i>
-            <i class="delete-session fas fa-trash" title="Delete"></i>
+         <i class="edit-session fas fa-edit custom-icon" title="Edit"></i>
+         <i class="delete-session fas fa-trash custom-icon" title="Delete"></i>
+
           </td>
         `;
 
@@ -239,7 +241,7 @@ function displaySessions(sessions) {
 document.addEventListener("DOMContentLoaded", () => {
   const sessionsList = document.getElementById("sessions-list");
 
-  // Event listener for Edit icons
+  // Event listener for Edit and Delete icons
   sessionsList.addEventListener("click", (e) => {
     if (e.target.classList.contains("edit-session")) {
       const sessionRow = e.target.closest("tr");
@@ -254,8 +256,58 @@ document.addEventListener("DOMContentLoaded", () => {
       };
       openEditModal(sessionId, sessionData);
     }
+
+    if (e.target.classList.contains("delete-session")) {
+      const sessionRow = e.target.closest("tr");
+      const sessionId = sessionRow.getAttribute("data-id");
+      openDeleteConfirmation(sessionId, sessionRow);
+    }
   });
 });
+
+function openDeleteConfirmation(sessionId, sessionRow) {
+  const modalHtml = `
+    <div class="modal-overlay">
+      <div class="modal">
+        <h3>Are you sure you want to delete this session?</h3>
+        <div class="modal-actions">
+          <button type="button" id="confirm-delete">Ok</button>
+          <button type="button" id="cancel-delete">Cancel</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.body.insertAdjacentHTML("beforeend", modalHtml);
+
+  // Add event listeners for Ok and Cancel buttons
+  document
+    .getElementById("confirm-delete")
+    .addEventListener("click", () => deleteSession(sessionId, sessionRow));
+  document
+    .getElementById("cancel-delete")
+    .addEventListener("click", closeModal);
+}
+
+// Function to delete the session
+async function deleteSession(sessionId, sessionRow) {
+  console.log("Deleting session with ID:", sessionId);
+  try {
+    const response = await deleteResource(`sessions/${sessionId}`);
+
+    if (response.status) {
+      sessionRow.remove(); // Remove the session row from the DOM
+      alert("Session deleted successfully!");
+    } else {
+      alert("Failed to delete the session: " + response.message);
+    }
+
+    closeModal(); // Close the modal
+  } catch (error) {
+    console.error("Error deleting session:", error);
+    alert("An error occurred while deleting the session.");
+  }
+}
 
 // Function to open the modal with session data
 function openEditModal(sessionId, sessionData) {
@@ -353,7 +405,7 @@ async function saveSession(sessionId) {
       sessionRow.querySelector(".session-title").textContent = title;
       sessionRow.querySelector(".session-type").textContent = type;
       sessionRow.querySelector(".session-sectionId").textContent = sectionId;
-      console.log("session updated 200")
+      console.log("session updated 200");
       // Update the video display
       if (videoFile || videoUrl) {
         const videoElement = sessionRow.querySelector(".session-video");
