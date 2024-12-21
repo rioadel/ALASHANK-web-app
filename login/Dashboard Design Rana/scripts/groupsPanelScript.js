@@ -17,6 +17,8 @@ var editSectionForm = document.getElementById("edit-section-form");
 var currentSection;
 var sections = [];
 var sectionsCounter = 1;
+var imageCounter = 2;
+var images = [];
 
 var regex = new RegExp(/(add Section)|(delete section)/i);
 function createTab(container, tabName, tabID, tabColor, tabImageUrl) {
@@ -50,9 +52,16 @@ function createTab(container, tabName, tabID, tabColor, tabImageUrl) {
 function createSection(secName, secColor, secImageUrl) {
     
     var section = createTab(bigSectionContainer, secName, "section-" + sectionsCounter, secColor, secImageUrl);
-    localStorage.setItem("gName" + sectionsCounter, secName);
-    localStorage.setItem("gColor" + sectionsCounter, secColor);
-    localStorage.setItem("gImage" + sectionsCounter, secImageUrl);
+    // localStorage.setItem("gName" + sectionsCounter, secName);
+    // localStorage.setItem("gColor" + sectionsCounter, secColor);
+    // localStorage.setItem("gImage" + sectionsCounter, secImageUrl);
+    localStorage.setItem(`section-${sectionsCounter}`, JSON.stringify({
+        id: `section-${sectionsCounter}`,
+        name: secName,
+        color: secColor,
+        image: secImageUrl
+    }))
+    images.push(document.images[1+sectionsCounter]);
     sections.push(section);
     sectionsCounter++;
     section.addEventListener('click',function (event) {
@@ -123,15 +132,16 @@ function deleteSection(sectionName) {
         
         if (section) {
             section.remove();
-            var tabIndex = section.id.split("-")[1] - 1;
-            sections.splice(tabIndex, 1);
-            localStorage.removeItem("gName" + tabIndex);
-            localStorage.removeItem("gColor" + tabIndex);
-            localStorage.removeItem("gImage" + tabIndex);
-            console.log(`Section "${sectionName}" has been deleted.`);
+            localStorage.removeItem(sectionName);
+            // var tabIndex = section.id.split("-")[1] - 1;
+            // sections.splice(tabIndex, 1);
+            // localStorage.removeItem("gName" + tabIndex);
+            // localStorage.removeItem("gColor" + tabIndex);
+            // localStorage.removeItem("gImage" + tabIndex);
+            console.log(`${sectionName} has been deleted.`);
         }
         else {
-            console.log(`Section "${sectionName}" not found.`);
+            console.log(`${sectionName} not found.`);
         }
 }
 
@@ -163,9 +173,15 @@ function editTab(container, tabName, newName="", newColor="", newImageUrl="") {
 function editSection(sectionName, newName = "", newColor = "", newImageUrl = "") {
     var tab = editTab(sections, sectionName, newName, newColor, newImageUrl);
     var id = tab.id.split('-')[1]; 
-    localStorage.setItem("gName" + id, newName);
-    localStorage.setItem("gColor"+ id, newColor);
-    localStorage.setItem("gImage"+ id, newImageUrl);
+    localStorage.setItem(secName, JSON.stringify({
+        id: tab.id,
+        name: newName,
+        color: newColor,
+        image: newImageUrl
+    }))
+    // localStorage.setItem("gName" + id, newName);
+    // localStorage.setItem("gColor"+ id, newColor);
+    // localStorage.setItem("gImage"+ id, newImageUrl);
 }
 
 document.addEventListener("click", function (event) {
@@ -265,70 +281,26 @@ cancelEditSectionButton.addEventListener("click", function (event) {
 })
 
 window.onload = function () {
-    var gName = [], gColor = [], gImage = [];
-    if (localStorage.length > 0) {
-        for(let x in localStorage){
-            if (x.startsWith("gName")) {
-                gName.push(localStorage[x])
-            }
-            else if (x.startsWith("gColor")) {
-                gColor.push(localStorage[x]);
-            }
-            // Check for group image
-            else if (x.startsWith("gImage")) {
-                gImage.push(localStorage[x]) ;
-            }
-        }
-    }
-    for (let i = 0; i < gName.length; i++) {
-        createSection(gName[i], gColor[i], gImage[i]);        
-    }
+
+    for (const item in localStorage) {
+    console.log(item);
+}
+    // var gName = [], gColor = [], gImage = [];
+    // if (localStorage.length > 0) {
+    //     for(let x in localStorage){
+    //         if (x.startsWith("gName")) {
+    //             gName.push(localStorage[x])
+    //         }
+    //         else if (x.startsWith("gColor")) {
+    //             gColor.push(localStorage[x]);
+    //         }
+    //         // Check for group image
+    //         else if (x.startsWith("gImage")) {
+    //             gImage.push(localStorage[x]) ;
+    //         }
+    //     }
+    // }
+    // for (let i = 0; i < gName.length; i++) {
+    //     createSection(gName[i], gColor[i], gImage[i]);        
+    // }
 };
-
-
-
-// class GroupInfo{
-//     constructor() {
-//         this.section = currentSection;
-//         this.id = currentSection.id;
-//         this.name = currentSection.querySelector('h2');
-//         this.color = currentSection.style.color;
-//         this.image = currentSection.querySelector('img').src;
-//         this.sections = [];
-//         this.sectionsCounter = 1;
-//     }
-//     createSectionTab(container ,sectionName, sectionColor, unintImageURl) {
-//         var section = createTab(container, sectionName,  "section-" +this.sectionsCounter, sectionColor, unintImageURl);
-//         localStorage.setItem("uName" + sectionsCounter, sectionName);
-//         localStorage.setItem("uColor" + sectionsCounter, sectionColor);
-//         localStorage.setItem("uImage" + sectionsCounter, unintImageURl);
-//         this.sections.push(section);
-//         this.sectionsCounter++;
-//         return section;
-//     }
-//     editSectionTab(sectionName,sectionNewName, sectionNewColor, sectionNewImageUrl) {
-//         editTab(this.sections, sectionName, sectionNewName, sectionNewColor, sectionNewImageUrl);
-//         localStorage.setItem("uName" + id, sectionNewName);
-//         localStorage.setItem("uColor"+ id, sectionNewColor);
-//         localStorage.setItem("uImage"+ id, sectionNewImageUrl);
-//     }
-//     searchForSectionName(sectionName) {
-//         searchForTabName(this.sections, sectionName);
-//     }
-//     deleteSection(sectionName) {    
-//         var section = searchForTabName(this.sections,sectionName);
-        
-//         if (section) {
-//             section.remove();
-//             var tabIndex = section.id.split("-")[1] - 1;
-//             this.sections.splice(tabIndex, 1);
-//             localStorage.removeItem("uName" + tabIndex);
-//             localStorage.removeItem("uColor" + tabIndex);
-//             localStorage.removeItem("uImage" + tabIndex);
-//             console.log(`section "${this.name}" has been deleted.`);
-//         }
-//         else {
-//             console.log(`Section "${this.name}" not found.`);
-//         }
-// }
-// }
