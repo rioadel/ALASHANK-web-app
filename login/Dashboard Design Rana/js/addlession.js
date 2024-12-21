@@ -99,13 +99,13 @@ document
     // formData.append("video", videoFile);
     for (const [key, value] of formData.entries()) {
       console.log(`${key}: ${value}`);
-    };
+    }
     try {
       console.log("Sending FormData:", Array.from(formData.entries())); // Log form data
       const response = await postFormData("sessions", formData, "POST"); // Send FormData
       if (response.status) {
         alert("Session with video file added successfully!");
-        window.location.href = "../lessons.html"; // Redirect to main page
+        window.location.href = "Dashboard Design Rana/lessons.html"; // Redirect to main page
       } else {
         alert(`Error: ${response.message}`);
       }
@@ -166,5 +166,4 @@ document
     //     alert("An error occurred while adding the session.");
     //   }
     // }
-
   });

@@ -1,20 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Session</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-    />
-    <script
-      src="../../core/helpers/local_storage_helper.js"
-      type="module"
-    ></script>
-    <script src="../../core/helpers/CRUD.js" type="module"></script>
+    />    <link rel="stylesheet" href="./Dashboard Design Rana/css/farmework.css" />
+        <link rel="stylesheet" href="./Dashboard Design Rana/css/master.css" />
+        <link rel="stylesheet" href="./Dashboard Design Rana/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap" rel="stylesheet" />
+<style>.container {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+h2 {
+  margin-bottom: 1.5rem;
+  color: #343a40;
+}
+.form-group label {
+  font-weight: 600;
+  color: #495057;
+}
+.form-control {
+  border-radius: 5px;
+}
+.btn-success {
+  font-weight: 600;
+  padding: 0.5rem 1.5rem;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+.btn-success:hover {
+  background-color: #218838;
+  color: #fff;
+}
+/* Styling for Video Source Options */
+.form-group div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.form-group div label {
+  margin-left: 0.5rem;
+}
+/* Hide the file field by default */
+.d-none {
+  display: none;
+}
+/* Icons for required fields */
+</style>
   </head>
-  <body class="bg-light">
+
+<body>
+    <div class="page d-flex">
+        <!-- sidebar -->
+        <div class="sidebar bg-white p-20 p-relative">
+            <!-- <h3 class="p-relative mt-0 txt-center">Ranona</h3> -->
+            <img src="./logo.png" alt="logo" width="100" class="logoimg">
+            <ul>
+                <li>
+                    <a class=" d-flex c-black align-center fs-14 rad-6 p-10" href="index.html">
+                        <i class="fa-regular fa-chart-bar fa-fw"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="groups.html">
+                        <i class="fa-solid fa-diagram-project fa-fw"></i>
+                        <span>Groups</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="lessons.html">
+                        <i class="fa-solid fa-graduation-cap fa-fw"></i>
+                        <span>Lessons</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="studnts.html">
+                        <i class="fa-regular fa-circle-user fa-fw"></i>
+                        <span>Students</span>
+                    </a>
+                </li>
+                <li>
+                    <a class=" d-flex c-black align-center fs-14 rad-6 p-10" href="profile.html">
+                        <i class="fa-regular fa-user fa-fw"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="setting.html">
+                        <i class="fa-solid fa-gear fa-fw"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            
+            </ul>
+        </div>
+
+        <div class="content w-full">
+            <!-- start Head -->
+            <div class="head bg-white p-15 between-flex">
+                <div class="search p-relative">
+                    <input type="search" placeholder="Type for search.." class="p-10">
+                </div>
+                <div class="icons d-flex align-center">
+                    <span class="notification p-relative">
+                        <i class="fa-regular fa-bell fa-lg"></i>
+                    </span>
+                    <img src="./Dashboard Design Rana/imgs/avatar.png " alt="" class="rad-half">
+                </div>
+            </div>
+            
     <div class="container mt-5">
       <h2>Add New Session</h2>
       <form id="add-session-form">
@@ -94,5 +198,7 @@
       defer
     ></script>
     <script type="module" src="./Dashboard Design Rana/js/lessons.js"></script>
-  </body>
+        </div>
+</body>
+
 </html>
