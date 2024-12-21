@@ -19,7 +19,7 @@ export async function postData(endpointUrl, resource) {
             return { status: false, message: data.message };
         }
         else {
-            return { status: true, data: data};
+            return { status: true, data: data };
         }
     } catch (error) {
         console.error('Error creating resource:', error);
@@ -28,12 +28,12 @@ export async function postData(endpointUrl, resource) {
 }
 
 // Post Form 
-export async function postFormData(endpointUrl, resource, postMethod='POST') {
+export async function postFormData(endpointUrl, resource, postMethod = 'POST') {
     try {
         console.log(LocalStorageHelper.getItem('token'));
         console.log(resource);
         const response = await fetch(`${apiBaseUrl}/${endpointUrl}`, {
-            
+
             method: postMethod,
             headers: {
                 'api-key': apiKey,
@@ -100,13 +100,19 @@ export async function deleteResource(endpointUrl) {
     try {
         const response = await fetch(`${apiBaseUrl}/${endpointUrl}`, {
             method: 'DELETE',
-            headers: headers
+            headers: {
+                'api-key': apiKey,
+                'Connection': 'keep-alive',
+                'Authorization': `Bearer ${LocalStorageHelper.getItem('token')}`,
+            },
         });
+        const data = await response.json();
+
         if (!response.ok) {
-            const data = await response.json();
-            throw new Error(data.message || 'Failed to delete resource');
+            return { status: false, message: data.message };
+        } else {
+            return { status: true, data: data };
         }
-        return { message: 'Resource deleted successfully' };
     } catch (error) {
         console.error('Error deleting resource:', error);
         throw error;

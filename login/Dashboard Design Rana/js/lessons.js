@@ -291,6 +291,7 @@ function openDeleteConfirmation(sessionId, sessionRow) {
 
 // Function to delete the session
 async function deleteSession(sessionId, sessionRow) {
+  console.log("Deleting session with ID:", sessionId);
   try {
     const response = await deleteResource(`sessions/${sessionId}`);
 
