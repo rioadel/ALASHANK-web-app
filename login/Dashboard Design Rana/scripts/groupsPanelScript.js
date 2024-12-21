@@ -23,7 +23,7 @@ var sectionsCounter = 1;
 var imageCounter = 2;
 var images = [];
 
-var regex = new RegExp(/(add Section)|(delete section)/i);
+var regex = new RegExp(/(add Section)|(delete section)|(add Group)|(delete Group)|(edit Section)|(edit Group) )/i);
 function createTab(container, tabName, tabID, tabColor, tabImageUrl) {
     if (container && tabName && tabID && tabColor && tabImageUrl) {
         var tab = document.createElement("div");
