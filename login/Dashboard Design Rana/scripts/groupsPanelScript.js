@@ -112,8 +112,7 @@ addSectionButton.addEventListener("click", function () {
     }
 });
 
-document.querySelectorAll(".tabContainer").forEach(function(tab) {
-    
+document.querySelectorAll(".tabContainer").forEach(function(tab) { 
 });
 
 
@@ -316,7 +315,7 @@ async function getSectionsAPI() {
                 }
                 return courses; // Return the list of sections
             } catch (error) {
-                console.error('Error in getSectionsAPI:', error);
+                console.error('Error in getSectionsAPI:', error.meessage);
                 return [];
             }
 }
@@ -327,53 +326,44 @@ async function addCourse() {
 
         // Create a FormData instance
         const formData = new FormData();
-
         // Get the file input element
         const fileInput = document.getElementById('inputSectionfile');
         if (!fileInput || !fileInput.files[0]) {
             alert('Please upload a file.');
             return;
         }
-
         // Prepare the `data` object
         const courseName = document.forms[0]?.elements[0]?.value;
         if (!courseName) {
             alert('Course name is required.');
             return;
         }
-
         const data = {
             "name": courseName,
             "levelId": 1
         };
-
         // Append the file and JSON data to FormData
-        formData.append('logoUrl', fileInput.files[0]);
+        formData.append('logo', fileInput.files[0]);
         formData.append('data', JSON.stringify(data));
-
         // Debugging: Log FormData contents
         for (const [key, value] of formData.entries()) {
             console.log(`${key}:`, value);
         }
-
         // Post the FormData
         const response = await postFormData('courses/', formData, 'POST');
         if (response?.status) {
             // Extract course details
             const { course } = response.data;
             const { id, name, imageUrl } = course;
-
             // Save the course details to local storage
             LocalStorageHelper.setItem('course', { id, name, imageUrl });
             console.log('Local Storage Keys:', LocalStorageHelper.getAllKeys());
-
             // Notify user
             alert('Course added successfully!');
         } else {
             // Handle errors gracefully
             alert(response?.message || 'Invalid course name or image upload.');
         }
-
     } catch (error) {
         // Catch and log errors for debugging
         console.error('Error adding course:', error);
@@ -389,7 +379,7 @@ function editCourse(id) {
         "name": document.forms[2].elements[0].value,
         "levelId": 1,
     }
-    formData.append('logoUrl', fileInput.files[0]);
+    formData.append('logo', fileInput.files[0]);
     formData.append('data', JSON.stringify(data));
     for (const [key, value] of formData.entries()) {
         console.log(`${key}: ${value}`);
