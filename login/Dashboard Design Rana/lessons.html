@@ -1,75 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
-    <link rel="stylesheet" href="css/farmework.css">
-    <link rel="stylesheet" href="css/master.css">
-    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/farmework.css" />
+    <link rel="stylesheet" href="css/master.css" />
+    <link rel="stylesheet" href="css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap" rel="stylesheet" />
-    <script src="../../core/helpers/local_storage_helper.js" type="module"
-    defer></script>
-        <script type="module">
-            import { LocalStorageHelper } from "../../../core/helpers/local_storage_helper.js";
-            initSettingsPage();
-            function initSettingsPage(){
-                console.log(LocalStorageHelper.getAllKeys());
-                let teacherImage = document.images[1];
-                var testImg= LocalStorageHelper.getItem('teacher').imageUrl.replace('http://51.68.175.80/','http://51.68.175.80/test/');
-                teacherImage.src = testImg;
-            }
-        </script>
-</head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="../../core/helpers/local_storage_helper.js"
+      type="module"
+      defer
+    ></script>
+    <script type="module">
+      import { LocalStorageHelper } from "../../../core/helpers/local_storage_helper.js";
+      initSettingsPage();
+      function initSettingsPage() {
+        console.log(LocalStorageHelper.getAllKeys());
+        let teacherImage = document.images[1];
+        var testImg = LocalStorageHelper.getItem("teacher").imageUrl.replace(
+          "http://51.68.175.80/",
+          "http://51.68.175.80/test/"
+        );
+        teacherImage.src = testImg;
+      }
+    </script>
+    <style>
+      .container {
+        width: 80%;
+        max-width: 1200px; /* العرض الأقصى للجدول */
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 20px;
+      }
 
-<body>
+      #sessions-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      #sessions-table th,
+      #sessions-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      #sessions-table th {
+        background-color: #f2f2f2;
+        color: #333;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      #sessions-table td {
+        background-color: #fff;
+        color: #555;
+      }
+
+      /* Hover effect for rows */
+      #sessions-table tr:hover {
+        background-color: #f9f9f9;
+      }
+
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+
+      .modal {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        width: 400px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .modal h3 {
+        margin: 0 0 15px;
+      }
+
+      .modal-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+
+      .modal-actions button {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      #save-session {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      #cancel-session {
+        background-color: #f44336;
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body>
     <div class="page d-flex">
-        <!-- sidebar -->
-        <div class="sidebar bg-white p-20 p-relative">
-            <!-- <h3 class="p-relative mt-0 txt-center">Ranona</h3> -->
-            <img src="imgs/logo.png" alt="logo" width="100" class="logoimg">
+      <!-- sidebar -->
+      <div class="sidebar bg-white p-20 p-relative">
+        <!-- <h3 class="p-relative mt-0 txt-center">Ranona</h3> -->
+        <img src="imgs/logo.png" alt="logo" width="100" class="logoimg" />
 
-            <ul>
-                <li>
-                    <a class=" d-flex c-black align-center fs-14 rad-6 p-10" href="index.html">
-                        <i class="fa-regular fa-chart-bar fa-fw"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="groups.html">
-                        <i class="fa-solid fa-diagram-project fa-fw"></i>
-                        <span>Groups</span>
-                    </a>
-                </li>
-                <li>
-                    <a class=" active d-flex c-black align-center fs-14 rad-6 p-10" href="#">
-                        <i class="fa-solid fa-graduation-cap fa-fw"></i>
-                        <span>Lessons</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="studnts.html">
-                        <i class="fa-regular fa-circle-user fa-fw"></i>
-                        <span>Students</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="profile.html">
-                        <i class="fa-regular fa-user fa-fw"></i>
-                        <span>Profile</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="setting.html">
-                        <i class="fa-solid fa-gear fa-fw"></i>
-                        <span>Settings</span>
-                    </a>
-                </li>
-                <!-- <li>
+        <ul>
+          <li>
+            <a
+              class="d-flex c-black align-center fs-14 rad-6 p-10"
+              href="index.html"
+            >
+              <i class="fa-regular fa-chart-bar fa-fw"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="d-flex c-black align-center fs-14 rad-6 p-10"
+              href="groups.html"
+            >
+              <i class="fa-solid fa-diagram-project fa-fw"></i>
+              <span>Groups</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="active d-flex c-black align-center fs-14 rad-6 p-10"
+              href="#"
+            >
+              <i class="fa-solid fa-graduation-cap fa-fw"></i>
+              <span>Lessons</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="d-flex c-black align-center fs-14 rad-6 p-10"
+              href="studnts.html"
+            >
+              <i class="fa-regular fa-circle-user fa-fw"></i>
+              <span>Students</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="d-flex c-black align-center fs-14 rad-6 p-10"
+              href="profile.html"
+            >
+              <i class="fa-regular fa-user fa-fw"></i>
+              <span>Profile</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="d-flex c-black align-center fs-14 rad-6 p-10"
+              href="setting.html"
+            >
+              <i class="fa-solid fa-gear fa-fw"></i>
+              <span>Settings</span>
+            </a>
+          </li>
+          <!-- <li>
                     <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="index.html">
                         <i class="fa-regular fa-file fa-fw"></i>
                         <span>Files</span>
@@ -81,20 +199,63 @@
                         <span>Plans</span>
                     </a>
                 </li> -->
-            </ul>
-        </div>
+        </ul>
+      </div>
 
-        <div class="content w-full">
-            <!-- start Head -->
-            <div class="head bg-white p-15 between-flex">
-                <div class="search p-relative">
-                    <input type="search" placeholder="Type for search.." class="p-10">
-                </div>
-                <div class="icons d-flex align-center">
-                    <img src="imgs/avatar.png" alt="" class="rad-half">
-                </div>
-            </div>
+      <div class="content w-full">
+        <!-- start Head -->
+        <div class="head bg-white p-15 between-flex">
+          <div class="search p-relative">
+            <input type="search" placeholder="Type for search.." class="p-10" />
+          </div>
+          <div class="icons d-flex align-center">
+            <img src="imgs/avatar.png" alt="" class="rad-half" />
+          </div>
         </div>
-</body>
-
+        <div style="text-align: center; margin: 20px 0;">
+            <button id="add-session-btn" class="btn btn-primary">Add Session</button>
+          </div>
+          
+        <div class="container">
+            <div id="modal-container"></div>
+    
+            <h2>Sessions List for All Sections</h2>
+    
+            <!-- Table to display sessions -->
+            <table
+              id="sessions-table"
+              cellpadding="10"
+              cellspacing="0"
+              class="sessions-table"
+            >
+              <thead>
+                <tr>
+                  <th>Session Title</th>
+                  <th>Type of file</th>
+                  <th>Session ID</th>
+                  <th>Section ID</th>
+                  <th>Video Name</th>
+    
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="sessions-list">
+                <!-- This section will be dynamically filled with session data via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+      </div>
+      <script>
+        document.getElementById('add-session-btn').addEventListener('click', () => {
+          window.location.href = '../Addlesson.html';
+        });
+      </script>
+          <script
+      src="../../core/helpers/local_storage_helper.js"
+      type="module"
+      defer
+    ></script>
+    <script src="../../core/helpers/CRUD.js" type="module" defer></script>
+    <script src="./js/lessons.js" type="module" defer></script>
+  </body>
 </html>
