@@ -25,6 +25,107 @@
                 teacherImage.src = testImg;
             }
         </script>
+         <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f9f9f9;
+            }
+            .container {
+                max-width: 800px;
+                margin: 20px auto;
+                background: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                display: none;
+            }
+            h1 {
+                text-align: center;
+                color: #333;
+            }
+            .form-group {
+                margin-bottom: 15px;
+            }
+            label {
+                display: block;
+                margin-bottom: 5px;
+                color: #555;
+            }
+            input[type="text"], select {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+            .buttons {
+                display: flex;
+                gap: 10px;
+                justify-content: center;
+            }
+            button {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            button.add {
+                background-color: #28a745;
+                color: white;
+            }
+            button.add:hover {
+                background-color: #218838;
+            }
+            button.delete {
+                background-color: #dc3545;
+                color: white;
+            }
+            button.delete:hover {
+                background-color: #c82333;
+            }
+            button.change {
+                background-color: #007bff;
+                color: white;
+            }
+            button.change:hover {
+                background-color: #0056b3;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+            table, th, td {
+                border: 1px solid #ddd;
+            }
+            th, td {
+                text-align: left;
+                padding: 8px;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+            .image-container {
+                text-align: center;
+                margin: 20px;
+            }
+            .image-container img {
+                width: 200px;
+                height: auto;
+                cursor: pointer;
+                margin: 10px;
+            }
+            .image-container img:hover {
+                opacity: 0.8;
+            }
+            .student-image {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+        </style>
     </head>
 
     <body>
@@ -103,7 +204,197 @@
                         <img src="imgs/avatar.png" alt class="rad-half">
                     </div>
                 </div>
+                 <!-- Add and View Students Section -->
+            <div class="image-container">
+                <img src="./Resources/addstudent.PNG" alt="Add Student" onclick="showAddStudent()">
+                <img src="./Resources/new.PNG" alt="View Students" onclick="showViewStudents()">
             </div>
+
+            <!-- Add Student Form -->
+            <div class="container" id="addStudentContainer">
+                <h1>Add Student</h1>
+                <form id="student-form" onsubmit="return addStudent(event)">
+                    <div class="form-group">
+                        <label for="student-name">Student Name:</label>
+                        <input type="text" id="student-name" name="student-name" placeholder="Enter your name" required max="20">
+                    </div>
+                    <div class="form-group">
+                        <label for="student-code">Student Code:</label>
+                        <input type="text" id="student-code" name="student-code" placeholder="enter exactly 6 digits" required pattern="^\d{6}$" required >
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject:</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Select a subject</option>
+                            <option value="math">Math</option>
+                            <option value="physics">Physics</option>
+                            <option value="chemistry">Chemistry</option>
+                            <option value="history">History</option>
+                            <option value="english">English</option>
+                            <option value="french">French</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="student-image">Student Image:</label>
+                        <img src="./Resources/s.PNG" style="width: 50px;height: 50px;" id="student-picture" onclick="document.getElementById('fileInput').click()">
+                        <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="updatePicturePreview(event)">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="add">Add Student</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- View Students Table -->
+            <div class="container" id="viewStudentsContainer">
+                <h1>View Students</h1>
+                <div id="studentList">
+                    <!-- List of students will appear here -->
+                </div>
+            </div>
+
+            <!-- Student Info Table (Modal) -->
+            <div class="container" id="studentInfoContainer" style="display: none;">
+                <h1>Student Info</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Code</th>
+                            <th>Subject</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentInfoTable">
+                        <!-- Student Info details will go here -->
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for student management (same as previously provided)
+        var students = JSON.parse(localStorage.getItem('students')) || [];
+        
+        function saveStudentsToLocalStorage() {
+            localStorage.setItem('students', JSON.stringify(students));
+        }
+
+        function generatePassword() {
+            return Math.random().toString(36).slice(-8);
+        }
+
+        function updatePicturePreview(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onloadend = function () {
+                document.getElementById('student-picture').src = reader.result;
+            };
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function addStudent(event) {
+            event.preventDefault();
+            const name = document.getElementById('student-name').value.trim();
+            const code = document.getElementById('student-code').value.trim();
+            const subject = document.getElementById('subject').value;
+            const picture = document.getElementById('student-picture').src;
+
+            if (!name || !code || !subject || picture === './s.PNG') {
+                alert('Please fill out all fields and select an image.');
+                return;
+            }
+
+            if (students.some(student => student.code === code)) {
+                alert("Student with this code already exists!");
+                return;
+            }
+
+            students.push({ name, code, subject, picture });
+            saveStudentsToLocalStorage();
+
+            document.getElementById('student-name').value = '';
+            document.getElementById('student-code').value = '';
+            document.getElementById('subject').value = '';
+            document.getElementById('student-picture').src = './s.PNG';
+            document.getElementById('fileInput').value = '';
+
+            displayStudents();
+        }
+
+        function displayStudents() {
+            const studentList = document.getElementById('studentList');
+            studentList.innerHTML = '';
+            students.forEach(student => {
+                const studentCard = document.createElement('div');
+                studentCard.classList.add('student-card');
+                studentCard.innerHTML = `
+                    <img src="${student.picture}" alt="${student.name}" class="student-image">
+                    <p><strong>${student.name}</strong></p>
+                    <p>${student.code}</p>
+                    <button onclick="showStudentInfo('${student.code}')">Show Info</button>
+                `;
+                studentList.appendChild(studentCard);
+            });
+        }
+
+        function showAddStudent() {
+            document.getElementById('addStudentContainer').style.display = 'block';
+            document.getElementById('viewStudentsContainer').style.display = 'none';
+        }
+
+        function showViewStudents() {
+            document.getElementById('addStudentContainer').style.display = 'none';
+            document.getElementById('viewStudentsContainer').style.display = 'block';
+            displayStudents();
+        }
+
+        function showStudentInfo(code) {
+            const student = students.find(s => s.code === code);
+            if (!student) return;
+
+            document.getElementById('viewStudentsContainer').style.display = 'none';
+            document.getElementById('studentInfoContainer').style.display = 'block';
+
+            const studentInfoTable = document.getElementById('studentInfoTable');
+            studentInfoTable.innerHTML = `
+                <tr>
+                    <td>${student.name}</td>
+                    <td>${student.code}</td>
+                    <td>${student.subject}</td>
+                    <td>
+                        <button class="delete" onclick="deleteStudent('${student.code}')">Delete</button>
+                        <button class="change" onclick="changePassword()">Change Password</button>
+                    </td>
+                </tr>
+            `;
+        }
+
+        function deleteStudent(code) {
+            students = students.filter(student => student.code !== code);
+            saveStudentsToLocalStorage();
+            alert(`Student has been deleted.`);
+            document.getElementById('studentInfoContainer').style.display = 'none';
+            document.getElementById('viewStudentsContainer').style.display = 'block';
+            displayStudents();
+        }
+
+        function changePassword() {
+            alert('New Password: ' + generatePassword());
+        }
+
+        window.onload = function () {
+            displayStudents();
+        };
+    </script>   
+            </div>
+
+
+           
         </body>
 
     </html>
