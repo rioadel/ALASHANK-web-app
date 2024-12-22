@@ -1,0 +1,39 @@
+.container {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 25px;
+}
+h2 {
+  margin-bottom: 1.5rem;
+  color: #343a40;
+}
+.form-group label {
+  font-weight: 600;
+  color: #495057;
+}
+.form-control {
+  border-radius: 5px;
+}
+.btn-success {
+  font-weight: 600;
+  padding: 0.5rem 1.5rem;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+.btn-success:hover {
+  background-color: #218838;
+  color: #fff;
+}
+.form-group div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.form-group div label {
+  margin-left: 0.5rem;
+}
+.d-none {
+  display: none;
+}

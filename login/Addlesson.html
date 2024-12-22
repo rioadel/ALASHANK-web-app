@@ -14,48 +14,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap" rel="stylesheet" />
-<style>.container {
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-h2 {
-  margin-bottom: 1.5rem;
-  color: #343a40;
-}
-.form-group label {
-  font-weight: 600;
-  color: #495057;
-}
-.form-control {
-  border-radius: 5px;
-}
-.btn-success {
-  font-weight: 600;
-  padding: 0.5rem 1.5rem;
-  border-radius: 5px;
-  transition: all 0.3s;
-}
-.btn-success:hover {
-  background-color: #218838;
-  color: #fff;
-}
-/* Styling for Video Source Options */
-.form-group div {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-.form-group div label {
-  margin-left: 0.5rem;
-}
-/* Hide the file field by default */
-.d-none {
-  display: none;
-}
-/* Icons for required fields */
-</style>
+<link rel="stylesheet" href="./Dashboard Design Rana/css/addlesson.css">
+
   </head>
 
 <body>
@@ -66,37 +26,37 @@ h2 {
             <img src="./logo.png" alt="logo" width="100" class="logoimg">
             <ul>
                 <li>
-                    <a class=" d-flex c-black align-center fs-14 rad-6 p-10" href="index.html">
+                    <a class=" d-flex c-black align-center fs-14 rad-6 p-10" href="../login/Dashboard Design Rana/index.html">
                         <i class="fa-regular fa-chart-bar fa-fw"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="groups.html">
+                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="../login/Dashboard Design Rana/groups.html">
                         <i class="fa-solid fa-diagram-project fa-fw"></i>
                         <span>Groups</span>
                     </a>
                 </li>
                 <li>
-                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="lessons.html">
+                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="../login/Dashboard Design Rana/lessons.html">
                         <i class="fa-solid fa-graduation-cap fa-fw"></i>
                         <span>Lessons</span>
                     </a>
                 </li>
                 <li>
-                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="studnts.html">
+                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="../login/Dashboard Design Rana/studnts.html">
                         <i class="fa-regular fa-circle-user fa-fw"></i>
                         <span>Students</span>
                     </a>
                 </li>
                 <li>
-                    <a class=" d-flex c-black align-center fs-14 rad-6 p-10" href="profile.html">
+                    <a class=" d-flex c-black align-center fs-14 rad-6 p-10" href="../login/Dashboard Design Rana/profile.html">
                         <i class="fa-regular fa-user fa-fw"></i>
                         <span>Profile</span>
                     </a>
                 </li>
                 <li>
-                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="setting.html">
+                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="../login/Dashboard Design Rana/setting.html">
                         <i class="fa-solid fa-gear fa-fw"></i>
                         <span>Settings</span>
                     </a>
@@ -119,7 +79,7 @@ h2 {
                 </div>
             </div>
             
-    <div class="container mt-5">
+    <div class="container ">
       <h2>Add New Session</h2>
       <form id="add-session-form">
         <div class="form-group">
@@ -144,16 +104,9 @@ h2 {
               checked
             />
             <label for="video-url-option">YouTube URL</label>
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="video-file-option"
-              name="video_source"
-              value="file"
-            />
-            <label for="video-file-option">Upload File</label>
-          </div>
+       
+            
+                      </div>
         </div>
         <div class="form-group video-url-field">
           <label for="video-url">YouTube URL</label>
@@ -164,15 +117,7 @@ h2 {
             class="form-control"
           />
         </div>
-        <div class="form-group video-file-field d-none">
-          <label for="video-file">Upload Video</label>
-          <input
-            type="file"
-            id="video-file"
-            name="video_file"
-            class="form-control"
-          />
-        </div>
+     
         <button type="submit" class="btn btn-success">Submit</button>
       </form>
     </div>
