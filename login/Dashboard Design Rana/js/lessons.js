@@ -60,7 +60,7 @@ function displaySessions(sessions) {
           </td>
         `;
     // console.log(sessionElement);
-    console.log('yessssssssssssssssssssssssssssssssssssssssssssss');
+    console.log("yessssssssssssssssssssssssssssssssssssssssssssss");
     console.log(session);
     // Append the new row to the table body
     sessionsList.appendChild(sessionElement);
