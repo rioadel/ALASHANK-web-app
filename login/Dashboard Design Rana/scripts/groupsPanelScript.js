@@ -51,7 +51,7 @@ function createSection(secName, secImageUrl, secId) {
     section.addEventListener('click', function () {
         const tabId = this.id; 
         if (tabId) {
-            window.location.href = "./units.html";
+            window.location.href = `./units.html?id=${secId}`;
         } else {
             console.warn("Tab does not have an ID. Skipping storage.");
         }
