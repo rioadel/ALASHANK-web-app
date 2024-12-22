@@ -27,10 +27,6 @@ var unitsCounter = 1;
 
 var regex = new RegExp(/(add Unit)|(delete unit)/i);
 function createTabb(container, tabName, tabID, tabColor) {
-    console.log(container, tabName, tabID, tabColor);
-    console.log(tabName);
-    console.log(tabID);
-    console.log(tabColor);
     if (container && tabName && tabID && tabColor) {
         var tab = document.createElement("div");
         tab.classList.add("tabContainer");
@@ -90,7 +86,7 @@ addUnitButton.addEventListener("click", function () {
         console.log("you can't add this tab, please change tab name");
     } else {
         if (inputAddUnitName && inputAddUnitColor) {
-            addCourse(inputAddUnitName, transferedSectionID);
+            addSection(inputAddUnitName, transferedSectionID);
         } else {
             console.log("Please fill in all required fields.");
         }
@@ -261,7 +257,7 @@ cancelEditUnitButton.addEventListener("click", function (event) {
 })
 
 
-async function addCourse(courseName, courseId) {
+async function addSection(courseName, courseId) {
     try {
         console.log('Adding course:', courseName, courseId);
         const response = await postData('sections', { name: courseName, courseId: courseId });
@@ -284,7 +280,44 @@ async function addCourse(courseName, courseId) {
     }
 }
 
+function editSection(id) {
+    const formData = new FormData();
+    const fileInput = document.getElementById('inputSectionfile');
+    console.log(fileInput.files[0]);
+    const data = {
+        "name": document.forms[2].elements[0].value,
+        "levelId": 1,
+    }
+    formData.append('logo', fileInput.files[0]);
+    formData.append('data', JSON.stringify(data));
+    for (const [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+    };
+    postFormData(`courses/${id}`, formData, 'PATCH').then((data) => {
+        if (data.status) {
+            const { course } = data.data;
+            const { id, name, imageUrl } = course;
 
+            LocalStorageHelper.setItem('course', { id, name, imageUrl });
+            console.log(LocalStorageHelper.getAllKeys());
+            alert('Coures Added Successfully');
+        }
+        else {
+            alert(data.message || 'Invalid Name or Image');
+        }
+    });
+};
+
+function deleteSection(id) {
+    deleteResource(`courses/${id}`).then((data) => {
+        if (data.status) {
+            alert('Course deleted successfully');
+        }
+        else {
+            alert(data.message || "invalid course");
+        }
+    });
+}
 
 
 
