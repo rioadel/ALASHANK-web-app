@@ -130,9 +130,8 @@
 
     <body>
         <div class="page d-flex">
-            <!-- sidebar -->
+            
             <div class="sidebar bg-white p-20 p-relative">
-                <!-- <h3 class="p-relative mt-0 txt-center">Ranona</h3> -->
                 <img src="imgs/logo.png" alt="logo" width="100" class="logoimg">
                 <ul>
                     <li>
@@ -178,18 +177,7 @@
                             <span>Settings</span>
                         </a>
                     </li>
-                    <!-- <li>
-                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="index.html">
-                        <i class="fa-regular fa-file fa-fw"></i>
-                        <span>Files</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="d-flex c-black align-center fs-14 rad-6 p-10" href="index.html">
-                        <i class="fa-regular fa-credit-card fa-fw"></i>
-                        <span>Plans</span>
-                    </a>
-                </li> -->
+            
                 </ul>
             </div>
 
@@ -204,7 +192,6 @@
                         <img src="imgs/avatar.png" alt class="rad-half">
                     </div>
                 </div>
-                 <!-- Add and View Students Section -->
             <div class="image-container">
                 <img src="./Resources/addstudent.PNG" alt="Add Student" onclick="showAddStudent()">
                 <img src="./Resources/new.PNG" alt="View Students" onclick="showViewStudents()">
@@ -245,15 +232,15 @@
                 </form>
             </div>
 
-            <!-- View Students Table -->
+            <!-- View Students -->
             <div class="container" id="viewStudentsContainer">
                 <h1>View Students</h1>
                 <div id="studentList">
-                    <!-- List of students will appear here -->
+                    <!-- List of students -->
                 </div>
             </div>
 
-            <!-- Student Info Table (Modal) -->
+            <!--Student Info-->
             <div class="container" id="studentInfoContainer" style="display: none;">
                 <h1>Student Info</h1>
                 <table>
@@ -266,7 +253,7 @@
                         </tr>
                     </thead>
                     <tbody id="studentInfoTable">
-                        <!-- Student Info details will go here -->
+                        <!-- Student Info details-->
                     </tbody>
                 </table>
             </div>
@@ -275,7 +262,6 @@
     </div>
 
     <script>
-        // JavaScript for student management (same as previously provided)
         var students = JSON.parse(localStorage.getItem('students')) || [];
         
         function saveStudentsToLocalStorage() {
@@ -287,8 +273,8 @@
         }
 
         function updatePicturePreview(event) {
-            const file = event.target.files[0];
-            const reader = new FileReader();
+            var file = event.target.files[0];
+            var reader = new FileReader();
             reader.onloadend = function () {
                 document.getElementById('student-picture').src = reader.result;
             };
@@ -299,10 +285,10 @@
 
         function addStudent(event) {
             event.preventDefault();
-            const name = document.getElementById('student-name').value.trim();
-            const code = document.getElementById('student-code').value.trim();
-            const subject = document.getElementById('subject').value;
-            const picture = document.getElementById('student-picture').src;
+            var name = document.getElementById('student-name').value.trim();
+            var code = document.getElementById('student-code').value.trim();
+            var subject = document.getElementById('subject').value;
+            var picture = document.getElementById('student-picture').src;
 
             if (!name || !code || !subject || picture === './s.PNG') {
                 alert('Please fill out all fields and select an image.');
@@ -327,10 +313,10 @@
         }
 
         function displayStudents() {
-            const studentList = document.getElementById('studentList');
+            var studentList = document.getElementById('studentList');
             studentList.innerHTML = '';
             students.forEach(student => {
-                const studentCard = document.createElement('div');
+                var studentCard = document.createElement('div');
                 studentCard.classList.add('student-card');
                 studentCard.innerHTML = `
                     <img src="${student.picture}" alt="${student.name}" class="student-image">
@@ -354,13 +340,13 @@
         }
 
         function showStudentInfo(code) {
-            const student = students.find(s => s.code === code);
+            var student = students.find(s => s.code === code);
             if (!student) return;
 
             document.getElementById('viewStudentsContainer').style.display = 'none';
             document.getElementById('studentInfoContainer').style.display = 'block';
 
-            const studentInfoTable = document.getElementById('studentInfoTable');
+            var studentInfoTable = document.getElementById('studentInfoTable');
             studentInfoTable.innerHTML = `
                 <tr>
                     <td>${student.name}</td>
