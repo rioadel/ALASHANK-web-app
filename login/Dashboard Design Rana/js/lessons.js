@@ -24,7 +24,7 @@ function displaySessions(sessions) {
   (sessions.sessions || []).forEach((session) => {
     let videoContent = "Not Available";
     if (session.type === "youtube" && session.video) {
-      videoContent = `<a href="${session.video.name}" target="_blank">${
+      videoContent = `<a href="${session.video.url}" target="_blank">${
         session.video?.url || "View Video"
       }</a>`;
     }
