@@ -38,7 +38,7 @@ function createTabb(container, tabName, tabID) {
         return tab;
     }
     else {
-        console.log("Can't create tab");
+        
     }
 
 }
@@ -76,12 +76,12 @@ addUnitButton.addEventListener("click", function () {
 
     var inputAddUnitName = document.getElementById("inputUnitName").value;
     if (regex.test(inputAddUnitName)) {
-        console.log("you can't add this tab, please change tab name");
+        
     } else {
         if (inputAddUnitName ) {
             addSection(inputAddUnitName, transferedSectionID);
         } else {
-            console.log("Please fill in all required fields.");
+            
         }
     }
 });
@@ -154,13 +154,13 @@ document.addEventListener("click", function (event) {
 });
 async function addSection(courseName, courseId) {
     try {
-        console.log('Adding course:', courseName, courseId);
+        
         const response = await postData('sections', { name: courseName, courseId: courseId });
         if (response?.status) {
-            console.log('response', response);
+            
             let secId = response.data.section.id ;
-            console.log('yessssssssssssssssssssssssssssssssssssss');
-            console.log(secId);
+            
+            
             createUnit(courseName,  secId);
             // Notify user
             alert('Section is added successfully!');
@@ -178,7 +178,7 @@ async function addSection(courseName, courseId) {
 // function editSection(id) {
 //     const formData = new FormData();
 //     const fileInput = document.getElementById('inputSectionfile');
-//     console.log(fileInput.files[0]);
+//     
 //     const data = {
 //         "name": document.forms[2].elements[0].value,
 //         "levelId": 1,
@@ -186,7 +186,7 @@ async function addSection(courseName, courseId) {
 //     formData.append('logo', fileInput.files[0]);
 //     formData.append('data', JSON.stringify(data));
 //     for (const [key, value] of formData.entries()) {
-//         console.log(`${key}: ${value}`);
+//         
 //     };
 //     postFormData(`courses/${id}`, formData, 'PATCH').then((data) => {
 //         if (data.status) {
@@ -194,7 +194,7 @@ async function addSection(courseName, courseId) {
 //             const { id, name, imageUrl } = course;
 
 //             LocalStorageHelper.setItem('course', { id, name, imageUrl });
-//             console.log(LocalStorageHelper.getAllKeys());
+//             
 //             alert('Coures Added Successfully');
 //         }
 //         else {
@@ -235,13 +235,13 @@ window.onload = function () {
 async function getUnitsAPI(courseID) {
     try {
         const res = getResource(`courses/${courseID}`).then((res) => {
-            console.log(res);
+            
             var course = res.course;
             var sections = course.sections;
 
-            console.log('Fetched sections:', sections);
+            
             for (const item of sections) {
-                console.log(item.id);
+                
                 createUnit(item.name, item.id);
             }
         });

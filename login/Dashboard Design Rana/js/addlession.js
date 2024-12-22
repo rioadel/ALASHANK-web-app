@@ -42,13 +42,13 @@ document
         url: videoUrlField.value || " InValid",
       },
     };
-    console.log("SECTIONID");
-    console.log(SECTIONID);
+    
+    
     const formData = new FormData();
     formData.append("data", JSON.stringify(sessionData));
 
     for (const [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
+      
     }
     try {
       const response = await postFormData("sessions", formData, "POST");

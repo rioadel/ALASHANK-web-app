@@ -2,7 +2,7 @@ import { LocalStorageHelper } from "../../../core/helpers/local_storage_helper.j
 
 initHomePage();
 function initHomePage(){
-    console.log(LocalStorageHelper.getAllKeys());
+    
     let teacherName= document.getElementById('teacherName');
     let teacherImage = document.getElementById('teacherImage');
     let teacherImage2 = document.images[1]  ;

@@ -31,8 +31,8 @@ export async function postData(endpointUrl, resource) {
 // Post Form 
 export async function postFormData(endpointUrl, resource, postMethod = 'POST') {
     try {
-        console.log(LocalStorageHelper.getItem('token'));
-        console.log(resource);
+
+
         const response = await fetch(`${apiBaseUrl}/${endpointUrl}`, {
 
             method: postMethod,
@@ -44,7 +44,7 @@ export async function postFormData(endpointUrl, resource, postMethod = 'POST') {
             body: resource instanceof FormData ? resource : JSON.stringify(resource),
         });
         const data = await response.json();
-        console.log(data);
+
         if (!response.ok) {
             return { status: false, message: data.message };
         } else {
@@ -124,19 +124,19 @@ export async function deleteResource(endpointUrl) {
 //     try {
 //         // Create a resource
 //         const newResource = await createResource({ name: 'Example', description: 'An example resource' });
-//         console.log('Created:', newResource);
+//
 
 //         // Read a resource
 //         const fetchedResource = await getResource(newResource.id);
-//         console.log('Fetched:', fetchedResource);
+//
 
 //         // Update a resource
 //         const updatedResource = await updateResource(newResource.id, { name: 'Updated Example' });
-//         console.log('Updated:', updatedResource);
+//
 
 //         // Delete a resource
 //         const deletionMessage = await deleteResource(newResource.id);
-//         console.log(deletionMessage);
+//
 //     } catch (error) {
 //         console.error(error);
 //     }

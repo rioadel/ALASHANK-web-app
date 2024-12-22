@@ -1,8 +1,8 @@
 import { LocalStorageHelper } from "../../../core/helpers/local_storage_helper.js";
 import { postFormData } from "../../../core/helpers/CRUD.js";
-console.log(LocalStorageHelper.getAllKeys());
+
 initProfilePage();
-console.log(LocalStorageHelper.getItem('teacher'));
+
 function initProfilePage() {
     // fetching page values 
     let teacherName = document.forms[0].elements[0];
@@ -16,14 +16,14 @@ function initProfilePage() {
     teacherName.value = LocalStorageHelper.getItem('teacher').name;
     //img
     var testImg = LocalStorageHelper.getItem('teacher').imageUrl.replace('http://51.68.175.80/', 'http://51.68.175.80/test/');
-    console.log(testImg);
+    
  
     teacherImage1.src = testImg;
     teacherImage2.src = testImg;
     //username
     teacherUserName.value = LocalStorageHelper.getItem('teacher').username;
     //mobile
-    console.log(LocalStorageHelper.getItem('teacher').contacts);
+    
     let { value } = LocalStorageHelper.getItem('teacher').contacts[0];
     teacherMobile.value = value;
 }
@@ -34,7 +34,7 @@ function initProfilePage() {
 function updateProfile() {
     const formData = new FormData();
     const fileInput = document.getElementById('homepageImage');
-    console.log(fileInput.files[0]);
+    
     const data = {
         "name": document.forms[0].elements[0].value,
         "username": document.forms[0].elements[1].value,
@@ -49,7 +49,7 @@ function updateProfile() {
     formData.append('image', fileInput.files[0]);
     formData.append('data', JSON.stringify(data));
     for (const [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
+        
     };
     postFormData('teachers/me', formData, 'PATCH').then((data) => {
         if (data.status) {
@@ -57,7 +57,7 @@ function updateProfile() {
             const { id, name, username, contacts, imageUrl } = teacher;
 
             LocalStorageHelper.setItem('teacher', { id, name, username, contacts, imageUrl });
-            console.log(LocalStorageHelper.getAllKeys());
+            
             alert('Profile Updated Successfully');
         }
         else {

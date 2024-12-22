@@ -37,7 +37,7 @@ function createTab(container, tabName, tabID, tabImageUrl) {
         return tab;
     }
     else {
-        console.log("Can't create tab");
+        
     }
 
 }
@@ -68,12 +68,12 @@ addSectionButton.addEventListener("click", function () {
     var inputAddSectionImageUrl = fileInput.files.length ? URL.createObjectURL(fileInput.files[0]) : "../Resources/prepBoy3.png";
 
     if (regex.test(inputAddSectionName)) {
-        console.log("you can't add this tab, please change tab name");
+        
     } else {
         if (inputAddSectionName) {
             addCourse();
         } else {
-            console.log("Please fill in all required fields.");
+            
         }
     }
 });

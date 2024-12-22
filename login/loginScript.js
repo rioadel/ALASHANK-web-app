@@ -38,14 +38,14 @@ signInForm.addEventListener("submit", (e) => {
   if (isValid) {
     postData('teachers/login', { username: signInUserName.value, password: signInPassword.value }).then((data) => {
       if (data.status) {
-         // Extract only the necessary data
-         const { token, teacher } = data.data;
-         console.log(token);
-         const { id, name,username,contacts, imageUrl } = teacher;
-         LocalStorageHelper.setItem('token', token);
-         LocalStorageHelper.setItem('teacher', { id, name,username,contacts, imageUrl });
-         console.log(LocalStorageHelper.getAllKeys());
-         window.location.href = "Dashboard Design Rana/index.html";
+        // Extract only the necessary data
+        const { token, teacher } = data.data;
+
+        const { id, name, username, contacts, imageUrl } = teacher;
+        LocalStorageHelper.setItem('token', token);
+        LocalStorageHelper.setItem('teacher', { id, name, username, contacts, imageUrl });
+
+        window.location.href = "Dashboard Design Rana/index.html";
       }
       else {
         alert(data.message || 'Invalid Email or Password');
