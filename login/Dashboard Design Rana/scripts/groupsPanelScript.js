@@ -138,7 +138,7 @@ async function addCourse() {
         const response = await postFormData('courses/', formData, 'POST');
         if (response?.status) {
             const { course } = response.data;
-            const { id, name, imageUrl: logoUrl } = course;
+            const { id, name,  logoUrl } = course;
             createSection(name, logoUrl,id);
             alert('Course added successfully!');
         } else {
